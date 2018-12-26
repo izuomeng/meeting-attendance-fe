@@ -11,7 +11,8 @@ function isEmpty(val: any): boolean {
 
 function shake(obj: object = {}) {
   return Object.keys(obj).reduce(
-    (result, key) => (!isEmpty(obj[key]) ? ((result[key] = obj[key]), result) : result),
+    (result, key) =>
+      !isEmpty(obj[key]) ? ((result[key] = obj[key]), result) : result,
     {}
   )
 }
@@ -32,15 +33,22 @@ type Config = Partial<{
   method: string
   type: string
 }>
+
 type Options = Partial<{
   credentials: 'include' | 'omit' | 'same-origin' | undefined
   method: string
   headers: Record<string, string> | undefined
   body: FormData | string | null | undefined
 }>
-async function request(url: string, config: Config = {}) {
-  let { headers = {}, data, params, method = 'get', type = 'urlencoded' } = config
-  let fetchUrl = url
+
+export interface IResponse<T> {
+  status: number
+  message: string
+  data: T
+}
+
+async function request<T>(url: string, config: Config = {}) {
+  const { headers = {}, method = 'get', type = 'urlencoded' } = config
   const jsonHeaders = {
     'Content-Type': 'application/json; charset=utf-8'
   }
@@ -52,8 +60,15 @@ async function request(url: string, config: Config = {}) {
     method
   }
 
-  if (params) params = shake(params)
-  if (data) data = shake(data)
+  let { data, params } = config
+  let fetchUrl = url
+
+  if (params) {
+    params = shake(params)
+  }
+  if (data) {
+    data = shake(data)
+  }
 
   // 自动封装get请求的url
   if (method.toLowerCase() === 'get') {
@@ -81,7 +96,7 @@ async function request(url: string, config: Config = {}) {
   }
   try {
     const response = await fetch(fetchUrl, options)
-    const result = await response.json()
+    const result: IResponse<T> = await response.json()
     // 新标准
     if (result.status === 0) {
       return result

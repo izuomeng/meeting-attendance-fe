@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 class FinishedMeeting extends React.Component {
-  public render() {
+  render() {
     return <div>finished</div>
   }
 }

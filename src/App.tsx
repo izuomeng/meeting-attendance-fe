@@ -8,7 +8,7 @@ import Finished from './pages/Finished'
 import './App.css'
 
 class App extends React.Component {
-  public render() {
+  render() {
     return (
       <Router>
         <Layout>

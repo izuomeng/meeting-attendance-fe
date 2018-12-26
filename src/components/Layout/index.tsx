@@ -17,7 +17,7 @@ const StyledHeader = styled(Header)`
 `
 
 class AppLayout extends React.Component<any> {
-  public render() {
+  render() {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <StyledHeader />
