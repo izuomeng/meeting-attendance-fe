@@ -7,6 +7,7 @@ import { MeetingPlace } from './Common'
 import Loading from '../../components/Loading'
 import Sider from './Sider'
 import MeetingInfo from './MeetingInfo'
+import Empty from '../../components/Empty'
 
 interface IMeeting {
   title: string
@@ -115,11 +116,15 @@ class OngoingMeeting extends React.Component<object, IState> {
             </StyledButton>
           </div>
 
-          <MeetingRoomContainer>
-            {currentMeeting.rooms.map(item => (
-              <MeetingPlace {...item} key={item.id} />
-            ))}
-          </MeetingRoomContainer>
+          {currentMeeting.rooms.length > 0 ? (
+            <MeetingRoomContainer>
+              {currentMeeting.rooms.map(item => (
+                <MeetingPlace {...item} key={item.id} />
+              ))}
+            </MeetingRoomContainer>
+          ) : (
+            <Empty />
+          )}
 
           <Modal
             title="参会情况"

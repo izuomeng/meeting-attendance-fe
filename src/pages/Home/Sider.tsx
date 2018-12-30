@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import * as moment from 'moment'
 import { Tabs, Tree } from 'antd'
 import { WithFetchSimple } from '../../components/WithFetch'
+import Empty from '../../components/Empty'
 
 interface ISignItem {
   id: string
@@ -44,6 +45,9 @@ const Sider: React.SFC<{ id: string }> = ({ id }) => (
 const SignList: React.SFC<{ type: number; id: string }> = ({ id, type }) => (
   <WithFetchSimple url={`/api/meeting/${id}/sign-info?type=${type}`}>
     {data => {
+      if (!data.list || data.list.length === 0) {
+        return <Empty />
+      }
       const treeData = (data as { list: ISignItem[] }).list.reduce(
         (result, item) => {
           result[item.meetingRoom] = result[item.meetingRoom]
