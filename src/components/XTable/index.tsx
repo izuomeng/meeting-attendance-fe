@@ -49,7 +49,7 @@ const initialState = {
   data: [] as object[],
   editingIndex: -1,
   loading: false,
-  pageSize: 20,
+  pageSize: 10,
   total: 0
 }
 

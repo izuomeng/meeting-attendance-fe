@@ -8,9 +8,10 @@
  *   }}
  * </WithFetch>
  */
-import { PureComponent } from 'react'
+import * as React from 'react'
 import { isEqual } from 'lodash'
 import request from '../../libs/request'
+import Loading from '../../components/Loading'
 
 interface IProps<T> {
   url: string
@@ -24,6 +25,13 @@ interface IProps<T> {
   ) => React.ReactNode
 }
 
+interface IPropsSimple<T> {
+  url: string
+  loading?: boolean // 没有数据的时候是否展示Loading
+  params?: object
+  children: (data: T) => React.ReactNode
+}
+
 const initialState = {
   data: null as any,
   loading: false
@@ -31,7 +39,7 @@ const initialState = {
 
 type State = Readonly<typeof initialState>
 
-class WithFetch<T> extends PureComponent<IProps<T>, State> {
+class WithFetch<T> extends React.PureComponent<IProps<T>, State> {
   readonly state: State = initialState
 
   componentDidMount() {
@@ -64,5 +72,20 @@ class WithFetch<T> extends PureComponent<IProps<T>, State> {
     return children({ response: data, loading, fetchData: this.fetchData })
   }
 }
+
+export const WithFetchSimple: React.SFC<IPropsSimple<any>> = ({
+  children,
+  loading: showLoading = false,
+  ...rest
+}) => (
+  <WithFetch<any> {...rest}>
+    {({ response, loading }) => {
+      if (!response || loading) {
+        return showLoading ? <Loading /> : null
+      }
+      return children(response.data)
+    }}
+  </WithFetch>
+)
 
 export default WithFetch

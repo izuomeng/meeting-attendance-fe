@@ -1,12 +1,17 @@
 import * as React from 'react'
 import { Select, Button, Modal } from 'antd'
 import styled from 'styled-components'
-// import WithFetch from '../../components/WithFetch'
 import request from '../../libs/request'
+import SignInfo from './SignInfo'
+import { MeetingPlace } from './Common'
+import Loading from '../../components/Loading'
+import Sider from './Sider'
+import MeetingInfo from './MeetingInfo'
 
 interface IMeeting {
   title: string
   id: string
+  rooms: Array<{ id: string; roomName: string }>
 }
 interface IState {
   currentMeeting: undefined | IMeeting
@@ -26,11 +31,20 @@ const Container = styled.div`
   }
   & > div:last-child {
     width: 320px;
-    margin-left: 12px;
+    margin-left: 24px;
+  }
+  ${MeetingPlace} {
+    justify-content: space-between;
+    width: 48%;
   }
 `
+const MeetingRoomContainer = styled.div`
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+`
 
-class OngoingMeeting extends React.Component<object, object> {
+class OngoingMeeting extends React.Component<object, IState> {
   readonly state: IState = {
     currentMeeting: undefined,
     infoModalShow: false,
@@ -43,7 +57,7 @@ class OngoingMeeting extends React.Component<object, object> {
   }
 
   async fetchMeetingList() {
-    const { data } = await request('/api/ongoing-meetings')
+    const { data } = await request('/api/meetings')
     this.setState({ meetingList: data, currentMeeting: data[0] })
   }
 
@@ -56,15 +70,30 @@ class OngoingMeeting extends React.Component<object, object> {
   toggleModal = (
     name: 'signModalShow' | 'infoModalShow',
     visible: boolean = false
-  ): (() => void) => () => {
-    this.setState({ [name]: visible })
+  ) => () => {
+    // there is a bug using this.setState({ [name]: visible })
+    name === 'signModalShow'
+      ? this.setState({ signModalShow: visible })
+      : this.setState({ infoModalShow: visible })
   }
 
   render() {
-    const { currentMeeting, meetingList, signModalShow } = this.state
-    const id = currentMeeting && currentMeeting.id
+    const {
+      currentMeeting,
+      meetingList,
+      signModalShow,
+      infoModalShow
+    } = this.state
+
+    if (!currentMeeting) {
+      return <Loading />
+    }
+
+    const id = currentMeeting.id
+
     return (
       <Container>
+        {/* 与sider并列 */}
         <div>
           <div>
             <Select
@@ -78,22 +107,40 @@ class OngoingMeeting extends React.Component<object, object> {
                 </Select.Option>
               ))}
             </Select>
-            <StyledButton>会议信息</StyledButton>
+            <StyledButton onClick={this.toggleModal('infoModalShow', true)}>
+              会议信息
+            </StyledButton>
             <StyledButton onClick={this.toggleModal('signModalShow', true)}>
               参会情况
             </StyledButton>
           </div>
-          <div>current: {JSON.stringify(currentMeeting)}</div>
+
+          <MeetingRoomContainer>
+            {currentMeeting.rooms.map(item => (
+              <MeetingPlace {...item} key={item.id} />
+            ))}
+          </MeetingRoomContainer>
+
           <Modal
             title="参会情况"
             visible={signModalShow}
             footer={null}
+            width="60%"
             onCancel={this.toggleModal('signModalShow')}
           >
-            <div>参会信息</div>
+            {id && <SignInfo id={id} />}
+          </Modal>
+          <Modal
+            title="会议信息"
+            visible={infoModalShow}
+            footer={null}
+            onCancel={this.toggleModal('infoModalShow')}
+          >
+            <MeetingInfo id={id} />
           </Modal>
         </div>
-        <div>sider</div>
+
+        <Sider id={id} />
       </Container>
     )
   }
