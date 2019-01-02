@@ -30,13 +30,13 @@ type Config = Partial<{
   headers: Record<string, string> | undefined
   data: object | FormData
   params: object
-  method: string
+  method: 'get' | 'post' | 'put' | 'delete'
   type: string
 }>
 
 type Options = Partial<{
   credentials: 'include' | 'omit' | 'same-origin' | undefined
-  method: string
+  method: 'get' | 'post' | 'put' | 'delete'
   headers: Record<string, string> | undefined
   body: FormData | string | null | undefined
 }>
@@ -71,7 +71,7 @@ async function request<T>(url: string, config: Config = {}) {
   }
 
   // 自动封装get请求的url
-  if (method.toLowerCase() === 'get') {
+  if (method === 'get') {
     const searchParam = stringify(params || data)
     const wrappedUrl = url.includes('?') ? `${url}&` : `${url}?`
     fetchUrl = searchParam ? `${wrappedUrl}${searchParam}` : url

@@ -43,7 +43,7 @@ const MeetingRoomContainer = styled.div`
 
   ${MeetingPlace} {
     justify-content: space-between;
-    width: 30%;
+    width: 32%;
     margin-bottom: 12px;
   }
 `

@@ -1,9 +1,17 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import XTable from '../../components/XTable'
 import { WithFetchSimple } from '../../components/WithFetch'
 import { IRefs } from '../../components/XTable'
 import request from '../../libs/request'
 import { ISignItem } from './Common'
+
+interface IStatistics {
+  total: number
+  confirm: number
+  decline: number
+  unknown: number
+}
 
 const stateAndStyle = [
   { text: '未响应', style: { color: '#e45555' } },
@@ -11,9 +19,37 @@ const stateAndStyle = [
   { text: '参加', style: undefined }
 ]
 
+const SplitLine = styled.div`
+  background: #e6e6e6;
+  width: 1px;
+  height: 16px;
+  display: inline-block;
+`
+
+const StatisticsContainer = styled.div`
+  margin-bottom: 12px;
+  ${SplitLine} {
+    margin: 0 24px;
+    vertical-align: middle;
+  }
+  & > div {
+    display: inline-block;
+  }
+`
+
 export const Statistic: React.SFC<{ id: string }> = ({ id }) => (
-  <WithFetchSimple url={`/api/${id}`}>
-    {data => <div>text</div>}
+  <WithFetchSimple url={`/api/meeting/${id}/statistics`}>
+    {(data: IStatistics) => (
+      <StatisticsContainer>
+        <div>总人数: {data.total}</div>
+        <SplitLine />
+        <div>参加人数: {data.confirm}</div>
+        <SplitLine />
+        <div>请假人数: {data.decline}</div>
+        <SplitLine />
+        <div>未响应人数: {data.unknown}</div>
+      </StatisticsContainer>
+    )}
   </WithFetchSimple>
 )
 
@@ -58,7 +94,7 @@ const SignInfo: React.SFC<{ id: string }> = ({ id }) => {
   ]
   return (
     <>
-      {/* <Statistic id={id} /> */}
+      <Statistic id={id} />
       <XTable
         url={`/api/meeting/${id}/sign`}
         columns={columns}
