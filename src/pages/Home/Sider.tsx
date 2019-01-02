@@ -4,16 +4,7 @@ import * as moment from 'moment'
 import { Tabs, Tree } from 'antd'
 import { WithFetchSimple } from '../../components/WithFetch'
 import Empty from '../../components/Empty'
-
-interface ISignItem {
-  id: string
-  meetingRoom: string
-  phone: string
-  state: number
-  userName: string
-  email: string
-  signTime: string
-}
+import { IListResponse, ISignItem } from './Common'
 
 const Container = styled.div`
   padding-left: 24px;
@@ -28,35 +19,38 @@ const Container = styled.div`
 `
 
 const Sider: React.SFC<{ id: string }> = ({ id }) => (
-  <Container>
-    <h2 style={{ textAlign: 'center' }}>到场情况</h2>
-    <div>应到人数: 1280</div>
-    <div>当前人数: 1887</div>
-    <Tabs defaultActiveKey="1" style={{ width: '100%', marginTop: 12 }}>
-      {['全部', '已到场', '未到场'].map((tab, index) => (
-        <Tabs.TabPane key={String(index + 1)} tab={tab}>
-          <SignList type={index + 1} id={id} />
-        </Tabs.TabPane>
-      ))}
-    </Tabs>
-  </Container>
+  <WithFetchSimple url={`/api/meeting/${id}/sign`}>
+    {(data: IListResponse<ISignItem>) => (
+      <Container>
+        <h2 style={{ textAlign: 'center' }}>到场情况</h2>
+        <div>应到人数: {data.list.length}</div>
+        <div>
+          当前人数: {data.list.filter(item => item.attendance === 1).length}
+        </div>
+        <Tabs defaultActiveKey="1" style={{ width: '100%', marginTop: 12 }}>
+          {['全部', '已到场', '未到场'].map((tab, index) => (
+            <Tabs.TabPane key={String(index + 1)} tab={tab}>
+              <SignList type={index + 1} id={id} />
+            </Tabs.TabPane>
+          ))}
+        </Tabs>
+      </Container>
+    )}
+  </WithFetchSimple>
 )
 
 const SignList: React.SFC<{ type: number; id: string }> = ({ id, type }) => (
-  <WithFetchSimple url={`/api/meeting/${id}/sign-info?type=${type}`}>
-    {data => {
+  <WithFetchSimple url={`/api/meeting/${id}/sign?type=${type}`}>
+    {(data: IListResponse<ISignItem>) => {
       if (!data.list || data.list.length === 0) {
         return <Empty />
       }
-      const treeData = (data as { list: ISignItem[] }).list.reduce(
-        (result, item) => {
-          result[item.meetingRoom] = result[item.meetingRoom]
-            ? result[item.meetingRoom].concat(item)
-            : [item]
-          return result
-        },
-        {}
-      )
+      const treeData = data.list.reduce((result, item) => {
+        result[item.meetingRoom] = result[item.meetingRoom]
+          ? result[item.meetingRoom].concat(item)
+          : [item]
+        return result
+      }, {})
       return (
         <Tree defaultExpandAll={true}>
           {Object.keys(treeData).map((key: string) => (
@@ -84,7 +78,7 @@ const SignListItem: React.SFC<{ data: ISignItem; className?: string }> = ({
     <div>
       <span>{data.userName}</span>
       <br />
-      <span>{moment(data.signTime).format('hh:mm:ss')}</span>
+      {data.signTime && <span>{moment(data.signTime).format('hh:mm:ss')}</span>}
     </div>
     <div />
   </div>

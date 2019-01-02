@@ -4,7 +4,7 @@ import { isEqual } from 'lodash'
 import request, { IResponse } from '../../libs/request'
 import { EditableRow, EditableCell, EditableContext } from './Editable'
 
-interface IColumnBase {
+export interface IColumnBase {
   dataIndex: string
   title?: string
   children?: IColumn[]
@@ -13,18 +13,18 @@ interface IColumnBase {
   onCell?: (record: any) => any
 }
 
-interface IColumn extends IColumnBase {
+export interface IColumn extends IColumnBase {
   type?: string
   filters?: Array<{ text: string; value: string }>
   editable?: { render: IColumnBase['render'] }
   fitFilter?: (value: string) => object
 }
 
-interface IRefs {
+export interface IRefs {
   fetchData: (newParams?: object) => void
 }
 
-interface IProps {
+export interface IProps {
   columns: IColumn[]
   url: string
   params?: any

@@ -3,6 +3,12 @@ import styled from 'styled-components'
 import * as moment from 'moment'
 import { WithFetchSimple } from '../../components/WithFetch'
 
+interface IRoomUSer {
+  id: number
+  userName: string
+  roomName: string
+}
+
 export interface IMeetingInfo {
   id: string
   title: string
@@ -13,26 +19,42 @@ export interface IMeetingInfo {
   createBy: string
   createTime: string
   rooms: Array<{ id: number; roomName: string }>
+  users: IRoomUSer[]
 }
 
 const LeftItem = styled.div`
-  display: inline-block;
   width: 160px;
   padding: 12px 30px;
   background-color: #f4f4f4;
+  position: relative;
 `
 const RightItem = styled.div`
-  display: inline-block;
   padding: 12px 30px;
   font-size: 12px;
+  flex: 1;
 `
 
 const Item = styled<React.SFC<{ label: string; className?: string }>>(props => (
   <div className={props.className}>
-    <LeftItem>{props.label}</LeftItem>
+    <LeftItem>
+      <span>{props.label}</span>
+    </LeftItem>
     <RightItem>{props.children}</RightItem>
   </div>
-))``
+))`
+  display: flex;
+`
+
+const MutilineItem = styled(Item)`
+  ${RightItem} {
+    line-height: 2;
+  }
+  ${LeftItem} > span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+`
 
 function formatDate(timeStamp: string): string {
   return moment(timeStamp).format('YYYY-MM-DD')
@@ -47,18 +69,37 @@ const MeetingInfo: React.SFC<{
   id: string
 }> = props => (
   <WithFetchSimple url={`/api/meeting/${props.id}`} loading={true}>
-    {(data: IMeetingInfo) => (
-      <div className={props.className}>
-        <Item label="创建人">{data.createBy}</Item>
-        <Item label="审核人">{data.id}</Item>
-        <Item label="创建时间">{formatDate(data.createTime)}</Item>
-        <Item label="会议日期">{formatDate(data.startTime)}</Item>
-        <Item label="会议时间">
-          {formatTime(data.startTime)}-{formatTime(data.endTime)}
-        </Item>
-        <Item label="参会地点及人员">{data.id}</Item>
-      </div>
-    )}
+    {(data: IMeetingInfo) => {
+      const usersAndRooms = data.users.reduce((result, item) => {
+        result[item.roomName] = result[item.roomName]
+          ? result[item.roomName].concat(item)
+          : [item]
+        return result
+      }, {})
+      return (
+        <div className={props.className}>
+          <Item label="创建人">{data.createBy}</Item>
+          <Item label="审核人">{data.id}</Item>
+          <Item label="创建时间">{formatDate(data.createTime)}</Item>
+          <Item label="会议日期">{formatDate(data.startTime)}</Item>
+          <Item label="会议时间">
+            {formatTime(data.startTime)}-{formatTime(data.endTime)}
+          </Item>
+          <MutilineItem label="参会地点及人员">
+            {Object.keys(usersAndRooms).map(key => (
+              <div key={key}>
+                {key}:{' '}
+                {usersAndRooms[key].map((roomUser: IRoomUSer) => (
+                  <span style={{ marginLeft: 12 }} key={roomUser.id}>
+                    {roomUser.userName}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </MutilineItem>
+        </div>
+      )
+    }}
   </WithFetchSimple>
 )
 

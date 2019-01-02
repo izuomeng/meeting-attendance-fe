@@ -34,15 +34,18 @@ const Container = styled.div`
     width: 320px;
     margin-left: 24px;
   }
-  ${MeetingPlace} {
-    justify-content: space-between;
-    width: 48%;
-  }
 `
 const MeetingRoomContainer = styled.div`
   padding: 24px 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+
+  ${MeetingPlace} {
+    justify-content: space-between;
+    width: 30%;
+    margin-bottom: 12px;
+  }
 `
 
 class OngoingMeeting extends React.Component<object, IState> {
@@ -119,7 +122,7 @@ class OngoingMeeting extends React.Component<object, IState> {
           {currentMeeting.rooms.length > 0 ? (
             <MeetingRoomContainer>
               {currentMeeting.rooms.map(item => (
-                <MeetingPlace {...item} key={item.id} />
+                <MeetingPlace {...item} key={item.id} meetingId={id} />
               ))}
             </MeetingRoomContainer>
           ) : (
