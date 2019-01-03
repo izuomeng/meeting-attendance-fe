@@ -2,9 +2,10 @@ import * as React from 'react'
 import { Card } from 'antd'
 import styled from 'styled-components'
 import { WithFetchSimple } from '../../components/WithFetch'
+import { IListResponse } from '../../libs/interfaces'
 
 export interface ISignItem {
-  id: string
+  id: number
   meetingRoom: string
   phone: string
   state: number
@@ -15,10 +16,6 @@ export interface ISignItem {
   attendance: number
 }
 
-export interface IListResponse<T> {
-  list: T[]
-}
-
 const Cover = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
@@ -27,7 +24,7 @@ const Cover = styled.div`
   width: 100%;
   padding-top: 56.25%;
 `
-const Description: React.SFC<{ id: string; meetingId: string }> = ({
+const Description: React.SFC<{ id: number; meetingId: string }> = ({
   id,
   meetingId
 }) => (
@@ -47,7 +44,7 @@ export const MeetingPlace = styled<
   React.SFC<{
     className?: string
     roomName: string
-    id: string
+    id: number
     meetingId: string
   }>
 >(({ className, roomName, id, meetingId }) => (

@@ -18,6 +18,11 @@ const StyledHeader = styled(Header)`
 
 class AppLayout extends React.Component<any> {
   render() {
+    const { pathname } = this.props.location
+    const path2Key = {
+      '/': 'ongoing',
+      '/finished': 'finished'
+    }
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <StyledHeader />
@@ -25,12 +30,12 @@ class AppLayout extends React.Component<any> {
           <Sider width={200} style={{ background: '#fff' }}>
             <Menu
               mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
+              defaultSelectedKeys={[path2Key[pathname]]}
+              defaultOpenKeys={['meeting-attendance']}
               style={{ height: '100%', borderRight: 0 }}
             >
               <SubMenu
-                key="sub1"
+                key="meeting-attendance"
                 title={
                   <span>
                     <Icon type="user" />
@@ -38,10 +43,10 @@ class AppLayout extends React.Component<any> {
                   </span>
                 }
               >
-                <Menu.Item key="1">
+                <Menu.Item key="ongoing">
                   <Link to="/">进行中</Link>
                 </Menu.Item>
-                <Menu.Item key="2">
+                <Menu.Item key="finished">
                   <Link to="/finished">已完成</Link>
                 </Menu.Item>
               </SubMenu>

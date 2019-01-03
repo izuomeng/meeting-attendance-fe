@@ -4,7 +4,8 @@ import * as moment from 'moment'
 import { Tabs, Tree } from 'antd'
 import { WithFetchSimple } from '../../components/WithFetch'
 import Empty from '../../components/Empty'
-import { IListResponse, ISignItem } from './Common'
+import { ISignItem } from './Common'
+import { IListResponse } from '../../libs/interfaces'
 
 const Container = styled.div`
   padding-left: 24px;
@@ -58,7 +59,7 @@ const SignList: React.SFC<{ type: number; id: string }> = ({ id, type }) => (
               {treeData[key].map((item: ISignItem) => (
                 <Tree.TreeNode
                   title={<StyledItem data={item} />}
-                  key={item.id}
+                  key={item.id + ''}
                 />
               ))}
             </Tree.TreeNode>
@@ -78,7 +79,11 @@ const SignListItem: React.SFC<{ data: ISignItem; className?: string }> = ({
     <div>
       <span>{data.userName}</span>
       <br />
-      {data.signTime && <span>{moment(data.signTime).format('hh:mm:ss')}</span>}
+      {data.signTime ? (
+        <span>{moment(data.signTime).format('hh:mm:ss')}</span>
+      ) : (
+        <span>00:00:00</span>
+      )}
     </div>
     <div />
   </div>

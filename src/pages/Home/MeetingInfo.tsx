@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import * as moment from 'moment'
 import { WithFetchSimple } from '../../components/WithFetch'
+import { IRoomEntity } from '../../libs/interfaces'
 
 interface IRoomUSer {
   id: number
@@ -18,7 +19,7 @@ export interface IMeetingInfo {
   state: number
   createBy: string
   createTime: string
-  rooms: Array<{ id: number; roomName: string }>
+  rooms: IRoomEntity[]
   users: IRoomUSer[]
 }
 

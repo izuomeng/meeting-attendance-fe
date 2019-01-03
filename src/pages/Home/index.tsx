@@ -8,12 +8,8 @@ import Loading from '../../components/Loading'
 import Sider from './Sider'
 import MeetingInfo from './MeetingInfo'
 import Empty from '../../components/Empty'
+import { IListResponse, IMeeting } from '../../libs/interfaces'
 
-interface IMeeting {
-  title: string
-  id: string
-  rooms: Array<{ id: string; roomName: string }>
-}
 interface IState {
   currentMeeting: undefined | IMeeting
   meetingList: IMeeting[]
@@ -61,8 +57,10 @@ class OngoingMeeting extends React.Component<object, IState> {
   }
 
   async fetchMeetingList() {
-    const { data } = await request('/api/meetings')
-    this.setState({ meetingList: data, currentMeeting: data[0] })
+    const {
+      data: { list }
+    } = await request<IListResponse<IMeeting>>('/api/meetings?type=ongoing')
+    this.setState({ meetingList: list, currentMeeting: list[0] })
   }
 
   handleChange = (value: string): void => {

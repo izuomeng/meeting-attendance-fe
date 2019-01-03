@@ -3,6 +3,7 @@ import { Table } from 'antd'
 import { isEqual } from 'lodash'
 import request, { IResponse } from '../../libs/request'
 import { EditableRow, EditableCell, EditableContext } from './Editable'
+import { CSSObject } from 'styled-components'
 
 export interface IColumnBase {
   dataIndex: string
@@ -28,8 +29,10 @@ export interface IProps {
   columns: IColumn[]
   url: string
   params?: any
+  style?: CSSObject
   rowKey?: string
   pagination?: object
+  expandedRowRender?: React.FunctionComponent
   refer?: (ref: IRefs) => void
   processData?: (response: any) => IResponse<any>
   beforeFetch?: () => object
