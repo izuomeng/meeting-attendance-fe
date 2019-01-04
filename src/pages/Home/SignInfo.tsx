@@ -1,8 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import XTable from '../../components/XTable'
+import XTable, { IRefs } from '../../components/XTable'
 import { WithFetchSimple } from '../../components/WithFetch'
-import { IRefs } from '../../components/XTable'
 import request from '../../libs/request'
 import { ISignItem } from './Common'
 

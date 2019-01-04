@@ -21,7 +21,9 @@ class AppLayout extends React.Component<any> {
     const { pathname } = this.props.location
     const path2Key = {
       '/': 'ongoing',
-      '/finished': 'finished'
+      '/finished': 'finished',
+      '/settings': 'settings',
+      '/statistics': 'statistics'
     }
     return (
       <Layout style={{ minHeight: '100vh' }}>
@@ -50,6 +52,18 @@ class AppLayout extends React.Component<any> {
                   <Link to="/finished">已完成</Link>
                 </Menu.Item>
               </SubMenu>
+              <Menu.Item key="settings">
+                <Link to="/settings">
+                  <Icon type="setting" />
+                  考勤设置
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="statistics">
+                <Link to="/statistics">
+                  <Icon type="bar-chart" />
+                  考勤统计
+                </Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout style={{ padding: '24px' }}>

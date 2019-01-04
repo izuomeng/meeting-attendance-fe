@@ -2,10 +2,12 @@ import * as React from 'react'
 import { FormComponentProps } from 'antd/lib/form'
 import { Form, DatePicker, Input, Button } from 'antd'
 import * as moment from 'moment'
+import { CSSObject } from 'styled-components'
 
 interface IProps extends FormComponentProps {
   onSubmit: (values: IFormValues) => void
   className?: string
+  style?: CSSObject
 }
 
 export interface IFormValues {
@@ -16,7 +18,8 @@ export interface IFormValues {
 const Filter: React.SFC<IProps> = ({
   form: { getFieldDecorator, validateFields },
   onSubmit,
-  className
+  className,
+  style
 }) => {
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -28,7 +31,12 @@ const Filter: React.SFC<IProps> = ({
     })
   }
   return (
-    <Form layout="inline" onSubmit={handleSubmit} className={className}>
+    <Form
+      layout="inline"
+      onSubmit={handleSubmit}
+      className={className}
+      style={style}
+    >
       <Form.Item label="会议日期">
         {getFieldDecorator('date')(<DatePicker placeholder="选择日期" />)}
       </Form.Item>

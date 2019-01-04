@@ -30,6 +30,7 @@ export interface IProps {
   url: string
   params?: any
   style?: CSSObject
+  className?: string
   rowKey?: string
   pagination?: object
   expandedRowRender?: React.FunctionComponent
@@ -59,8 +60,9 @@ const initialState = {
 type State = Readonly<typeof initialState>
 
 class XTable extends React.PureComponent<IProps, State> {
-  readonly state: State = initialState
-  filters: object = {}
+  readonly state = initialState
+  filters = {}
+  isMount = true
 
   componentDidMount() {
     const { refer } = this.props
@@ -78,6 +80,9 @@ class XTable extends React.PureComponent<IProps, State> {
     if (!isEqual(prevProps.params, params) || prevProps.url !== url) {
       this.setState({ currentPage: 1 }, () => this.fetchData())
     }
+  }
+  componentWillUnmount() {
+    this.isMount = false
   }
 
   // 一般情况下只有一层，暂不考虑多层的情况
@@ -138,6 +143,9 @@ class XTable extends React.PureComponent<IProps, State> {
           result = processData(result)
         }
         const { data } = result
+        if (!this.isMount) {
+          return
+        }
         this.setState({
           currentPage: data.current_page || currentPage,
           data: data.list || [],
@@ -148,7 +156,9 @@ class XTable extends React.PureComponent<IProps, State> {
               : (data.list && data.list.length) || 0
         })
       } finally {
-        this.setState({ loading: false })
+        if (this.isMount) {
+          this.setState({ loading: false })
+        }
       }
     })
   }

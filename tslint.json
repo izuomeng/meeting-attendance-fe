@@ -16,6 +16,7 @@
       }
     ],
     "member-access": [true, "no-public"],
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "no-console": false
   }
 }

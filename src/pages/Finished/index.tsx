@@ -1,33 +1,30 @@
 import * as React from 'react'
-import * as moment from 'moment'
 import styled from 'styled-components'
+import { Modal } from 'antd'
 import XTable, { IColumn } from '../../components/XTable'
-import { IUSerEntity, IMeeting } from '../../libs/interfaces'
-import Filter, { IFormValues } from './Filter'
+import { IUSerEntity, IMeeting, IRoomEntity } from '../../libs/interfaces'
+import { formatTime, formatDate } from '../../libs'
+import Filter, { IFormValues } from '../../components/Filter'
 import RoomTable from './RoomTable'
 
 const StyledFilter = styled(Filter)`
   margin-bottom: 12px !important;
 `
 
-const initialState = {
-  date: '',
-  title: ''
-}
+// TODO: 查看签到结果
+const FinishedMeeting: React.FunctionComponent = () => {
+  const [params, setParams] = React.useState({ date: '', title: '' })
+  const [modal, setModal] = React.useState(false)
+  const [currentRoom, setCurrentRoom] = React.useState({} as IRoomEntity)
 
-type State = Readonly<typeof initialState>
-
-class FinishedMeeting extends React.Component<object, State> {
-  readonly state = initialState
-
-  columns: IColumn[] = [
+  const columns: IColumn[] = [
     { dataIndex: 'title', title: '会议主题' },
     { dataIndex: 'createBy', title: '预约人' },
     {
       dataIndex: 'endTime',
       title: '会议日期',
-      render(cell) {
-        return moment(cell).format('YYYY-MM-DD')
+      render(_, record: IMeeting) {
+        return formatDate(record.startTime)
       }
     },
     {
@@ -36,8 +33,7 @@ class FinishedMeeting extends React.Component<object, State> {
       render(cell, record: IMeeting) {
         return (
           <span>
-            {moment(cell).format('hh:mm')}-
-            {moment(record.endTime).format('hh:mm')}
+            {formatTime(cell)}-{formatTime(record.endTime)}
           </span>
         )
       }
@@ -46,7 +42,7 @@ class FinishedMeeting extends React.Component<object, State> {
       dataIndex: 'signTime',
       title: '签到时间',
       render(cell) {
-        return moment(cell).format('hh:mm')
+        return formatTime(cell)
       }
     },
     {
@@ -58,27 +54,38 @@ class FinishedMeeting extends React.Component<object, State> {
     }
   ]
 
-  handleSubmit = async (values: IFormValues) => {
-    this.setState({
+  const handleSubmit = (values: IFormValues) => {
+    setParams({
       date: values.date && values.date.format('x'),
       title: values.title
     })
   }
 
-  render() {
-    const { date, title } = this.state
-    return (
-      <>
-        <StyledFilter onSubmit={this.handleSubmit} />
-        <XTable
-          url="/api/meetings?type=finished"
-          columns={this.columns}
-          params={{ date, title }}
-          expandedRowRender={RoomTable}
-        />
-      </>
-    )
-  }
+  return (
+    <>
+      <StyledFilter onSubmit={handleSubmit} />
+      <XTable
+        url="/api/meetings?type=finished"
+        columns={columns}
+        params={params}
+        expandedRowRender={(record: any) => (
+          <RoomTable
+            setRoom={setCurrentRoom}
+            setModal={setModal}
+            id={record.id}
+          />
+        )}
+      />
+      <Modal
+        title="签到结果"
+        visible={modal}
+        footer={null}
+        onCancel={() => setModal(false)}
+      >
+        <div>{JSON.stringify(currentRoom)}</div>
+      </Modal>
+    </>
+  )
 }
 
 export default FinishedMeeting

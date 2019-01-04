@@ -11,6 +11,7 @@
 import * as React from 'react'
 import { isEqual } from 'lodash'
 import request from '../../libs/request'
+import { useIsMounted } from '../../libs/hooks'
 import Loading from '../../components/Loading'
 
 interface IProps<T> {
@@ -41,6 +42,7 @@ type State = Readonly<typeof initialState>
 
 class WithFetch<T> extends React.PureComponent<IProps<T>, State> {
   readonly state: State = initialState
+  isMount = true
 
   componentDidMount() {
     this.fetchData()
@@ -53,15 +55,22 @@ class WithFetch<T> extends React.PureComponent<IProps<T>, State> {
       this.fetchData()
     }
   }
+  componentWillUnmount() {
+    this.isMount = false
+  }
 
   fetchData = (newParams?: object) => {
     this.setState({ loading: true }, async () => {
       const { url, params } = this.props
       try {
         const data = await request<any>(url, { params: newParams || params })
-        this.setState({ data })
+        if (this.isMount) {
+          this.setState({ data })
+        }
       } finally {
-        this.setState({ loading: false })
+        if (this.isMount) {
+          this.setState({ loading: false })
+        }
       }
     })
   }
@@ -87,5 +96,33 @@ export const WithFetchSimple: React.SFC<IPropsSimple<any>> = ({
     }}
   </WithFetch>
 )
+
+export function useFetch(url: string) {
+  const [data, setData] = React.useState(null as any)
+  const [loading, setLoading] = React.useState(false)
+  const isMounted = useIsMounted()
+
+  React.useEffect(() => {
+    if (data || loading) {
+      return
+    }
+    setLoading(true)
+    request(url)
+      .then(res => {
+        if (!isMounted()) {
+          return
+        }
+        setData(res.data)
+        setLoading(false)
+      })
+      .catch(() => {
+        if (isMounted()) {
+          setLoading(false)
+        }
+      })
+  })
+
+  return { data, loading }
+}
 
 export default WithFetch
