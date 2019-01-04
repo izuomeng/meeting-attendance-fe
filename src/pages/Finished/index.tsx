@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import { Modal } from 'antd'
 import XTable, { IColumn } from '../../components/XTable'
-import { IUSerEntity, IMeeting, IRoomEntity } from '../../libs/interfaces'
+import { IUSerEntity, IMeeting } from '../../libs/interfaces'
 import { formatTime, formatDate } from '../../libs'
 import Filter, { IFormValues } from '../../components/Filter'
 import RoomTable from './RoomTable'
@@ -11,48 +11,56 @@ const StyledFilter = styled(Filter)`
   margin-bottom: 12px !important;
 `
 
-// TODO: 查看签到结果
+const columns: IColumn[] = [
+  { dataIndex: 'title', title: '会议主题' },
+  { dataIndex: 'createBy', title: '预约人' },
+  {
+    dataIndex: 'endTime',
+    title: '会议日期',
+    render(_, record: IMeeting) {
+      return formatDate(record.startTime)
+    }
+  },
+  {
+    dataIndex: 'startTime',
+    title: '会议时间',
+    render(cell, record: IMeeting) {
+      return (
+        <span>
+          {formatTime(cell)}-{formatTime(record.endTime)}
+        </span>
+      )
+    }
+  },
+  {
+    dataIndex: 'signTime',
+    title: '签到时间',
+    render(cell) {
+      return formatTime(cell)
+    }
+  },
+  {
+    dataIndex: 'users',
+    title: '参会人数',
+    render(cell: IUSerEntity[]) {
+      return cell.length
+    }
+  }
+]
+
+const signColumns: IColumn[] = [
+  { dataIndex: 'userName', title: '姓名' },
+  { dataIndex: 'signTime', title: '到场时间' },
+  { dataIndex: 'signDesc', title: '到场结果' },
+  { dataIndex: 'cameraName', title: '摄像头' },
+  { dataIndex: 'image', title: '识别结果(人脸库vs抓拍图)' }
+]
+
 const FinishedMeeting: React.FunctionComponent = () => {
   const [params, setParams] = React.useState({ date: '', title: '' })
   const [modal, setModal] = React.useState(false)
-  const [currentRoom, setCurrentRoom] = React.useState({} as IRoomEntity)
-
-  const columns: IColumn[] = [
-    { dataIndex: 'title', title: '会议主题' },
-    { dataIndex: 'createBy', title: '预约人' },
-    {
-      dataIndex: 'endTime',
-      title: '会议日期',
-      render(_, record: IMeeting) {
-        return formatDate(record.startTime)
-      }
-    },
-    {
-      dataIndex: 'startTime',
-      title: '会议时间',
-      render(cell, record: IMeeting) {
-        return (
-          <span>
-            {formatTime(cell)}-{formatTime(record.endTime)}
-          </span>
-        )
-      }
-    },
-    {
-      dataIndex: 'signTime',
-      title: '签到时间',
-      render(cell) {
-        return formatTime(cell)
-      }
-    },
-    {
-      dataIndex: 'users',
-      title: '参会人数',
-      render(cell: IUSerEntity[]) {
-        return cell.length
-      }
-    }
-  ]
+  const [currentRoomId, setCurrentRoomId] = React.useState(0)
+  const [currenMeetingId, setCurrentMeetingId] = React.useState(0)
 
   const handleSubmit = (values: IFormValues) => {
     setParams({
@@ -70,7 +78,8 @@ const FinishedMeeting: React.FunctionComponent = () => {
         params={params}
         expandedRowRender={(record: any) => (
           <RoomTable
-            setRoom={setCurrentRoom}
+            setMeeting={setCurrentMeetingId}
+            setRoom={setCurrentRoomId}
             setModal={setModal}
             id={record.id}
           />
@@ -81,8 +90,12 @@ const FinishedMeeting: React.FunctionComponent = () => {
         visible={modal}
         footer={null}
         onCancel={() => setModal(false)}
+        width="60%"
       >
-        <div>{JSON.stringify(currentRoom)}</div>
+        <XTable
+          url={`/api/room/sign?mid=${currenMeetingId}&rid=${currentRoomId}`}
+          columns={signColumns}
+        />
       </Modal>
     </>
   )

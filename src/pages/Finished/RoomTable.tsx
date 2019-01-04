@@ -1,18 +1,19 @@
 import * as React from 'react'
 import * as moment from 'moment'
 import XTable from '../../components/XTable'
-import { IRoomEntity } from '../../libs/interfaces'
 
 interface IProps {
   id: number
   setModal: React.Dispatch<React.SetStateAction<boolean>>
-  setRoom: React.Dispatch<React.SetStateAction<IRoomEntity>>
+  setRoom: React.Dispatch<React.SetStateAction<number>>
+  setMeeting: React.Dispatch<React.SetStateAction<number>>
 }
 
 const RoomTable: React.FunctionComponent<IProps> = ({
   id,
   setModal,
-  setRoom
+  setRoom,
+  setMeeting
 }) => {
   const columns = [
     { dataIndex: 'roomName', title: '会场' },
@@ -28,12 +29,13 @@ const RoomTable: React.FunctionComponent<IProps> = ({
     {
       dataIndex: 'action',
       title: '操作',
-      render(_: any, record: IRoomEntity) {
+      render(_: any, record: any) {
         return (
           <a
             onClick={() => {
               setModal(true)
-              setRoom(record)
+              setMeeting(id)
+              setRoom(record.id)
             }}
           >
             签到结果
@@ -43,13 +45,11 @@ const RoomTable: React.FunctionComponent<IProps> = ({
     }
   ]
   return (
-    <>
-      <XTable
-        url={`/api/meeting/${id}/rooms`}
-        columns={columns}
-        style={{ margin: 12 }}
-      />
-    </>
+    <XTable
+      url={`/api/rooms?mid=${id}`}
+      columns={columns}
+      style={{ margin: 12 }}
+    />
   )
 }
 
