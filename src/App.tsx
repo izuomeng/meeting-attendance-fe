@@ -12,6 +12,7 @@ import Home from './pages/Home'
 import Finished from './pages/Finished'
 import Settings from './pages/Settings'
 import Statistics from './pages/Statistics'
+import Detail from './pages/Detail'
 
 import './App.css'
 
@@ -25,6 +26,7 @@ class App extends React.Component {
             <Route path="/finished" component={Finished} />
             <Route path="/settings" component={Settings} />
             <Route path="/statistics" component={Statistics} />
+            <Route path="/detail/:mid/:rid" component={Detail} />
             <Redirect to="/" />
           </Switch>
         </Layout>

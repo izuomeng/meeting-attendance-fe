@@ -8,11 +8,11 @@ import Loading from '../../components/Loading'
 import Sider from './Sider'
 import MeetingInfo from './MeetingInfo'
 import Empty from '../../components/Empty'
-import { IListResponse, IMeeting } from '../../libs/interfaces'
+import { IListResponse, IMeetingEntity } from '../../libs/interfaces'
 
 interface IState {
-  currentMeeting: undefined | IMeeting
-  meetingList: IMeeting[]
+  currentMeeting: undefined | IMeetingEntity
+  meetingList: IMeetingEntity[]
   signModalShow: boolean
   infoModalShow: boolean
 }
@@ -59,7 +59,9 @@ class OngoingMeeting extends React.Component<object, IState> {
   async fetchMeetingList() {
     const {
       data: { list }
-    } = await request<IListResponse<IMeeting>>('/api/meetings?type=ongoing')
+    } = await request<IListResponse<IMeetingEntity>>(
+      '/api/meetings?type=ongoing'
+    )
     this.setState({ meetingList: list, currentMeeting: list[0] })
   }
 

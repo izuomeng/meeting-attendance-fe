@@ -12,10 +12,11 @@ export interface IUSerEntity {
 export interface IRoomEntity {
   id: number
   roomName: string
+  location: string
 }
 
 //  请求/api/meetings返回的数据格式
-export interface IMeeting {
+export interface IMeetingEntity {
   id: string
   title: string
   startTime: string

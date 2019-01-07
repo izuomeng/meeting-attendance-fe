@@ -3,6 +3,7 @@ import { Card } from 'antd'
 import styled from 'styled-components'
 import { WithFetchSimple } from '../../components/WithFetch'
 import { IListResponse } from '../../libs/interfaces'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 export interface ISignItem {
   id: number
@@ -40,18 +41,25 @@ const Description: React.SFC<{ id: number; meetingId: string }> = ({
   </WithFetchSimple>
 )
 
-export const MeetingPlace = styled<
-  React.SFC<{
+const MP: React.FunctionComponent<
+  {
     className?: string
     roomName: string
     id: number
     meetingId: string
-  }>
->(({ className, roomName, id, meetingId }) => (
-  <Card hoverable={true} cover={<Cover />} className={className}>
+  } & RouteComponentProps
+> = ({ className, roomName, id, meetingId, history }) => (
+  <Card
+    hoverable={true}
+    cover={<Cover />}
+    className={className}
+    onClick={() => history.push(`/detail/${meetingId}/${id}`)}
+  >
     <Card.Meta
       title={roomName}
       description={<Description meetingId={meetingId} id={id} />}
     />
   </Card>
-))``
+)
+
+export const MeetingPlace = styled<any>(withRouter(MP))``

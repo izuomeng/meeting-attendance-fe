@@ -9,6 +9,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/styled-components": "^4.1.4",
     "antd": "^3.11.2",
+    "immer": "^1.10.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "qs": "^6.6.0",

@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import { Modal } from 'antd'
 import XTable, { IColumn } from '../../components/XTable'
-import { IUSerEntity, IMeeting } from '../../libs/interfaces'
+import { IUSerEntity, IMeetingEntity } from '../../libs/interfaces'
 import { formatTime, formatDate } from '../../libs'
 import Filter, { IFormValues } from '../../components/Filter'
 import RoomTable from './RoomTable'
@@ -17,14 +17,14 @@ const columns: IColumn[] = [
   {
     dataIndex: 'endTime',
     title: '会议日期',
-    render(_, record: IMeeting) {
+    render(_, record: IMeetingEntity) {
       return formatDate(record.startTime)
     }
   },
   {
     dataIndex: 'startTime',
     title: '会议时间',
-    render(cell, record: IMeeting) {
+    render(cell, record: IMeetingEntity) {
       return (
         <span>
           {formatTime(cell)}-{formatTime(record.endTime)}

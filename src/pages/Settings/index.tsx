@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Filter, { IFormValues } from '../../components/Filter'
 import XTable, { IRefs } from '../../components/XTable'
-import { IMeeting } from '../../libs/interfaces'
+import { IMeetingEntity } from '../../libs/interfaces'
 import { formatTime, formatDate } from '../../libs'
 
 const columns = [
@@ -14,7 +14,7 @@ const columns = [
   {
     dataIndex: 'endTime',
     title: '会议时间',
-    render(_: any, record: IMeeting) {
+    render(_: any, record: IMeetingEntity) {
       return (
         <span>
           {formatTime(record.startTime)}-{formatTime(record.endTime)}
