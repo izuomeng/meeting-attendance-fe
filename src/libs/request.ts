@@ -31,7 +31,7 @@ type Config = Partial<{
   data: object | FormData
   params: object
   method: 'get' | 'post' | 'put' | 'delete'
-  type: string
+  type: 'urlencoded' | 'json'
 }>
 
 type Options = Partial<{

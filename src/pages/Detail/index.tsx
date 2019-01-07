@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import XTable from '../../components/XTable'
 import Video from './Video'
 import CameraManage from './Camera'
+import Setting, { IRoomConfig } from './Setting'
 import { useFetch } from '../../libs/hooks'
 import { IMeetingEntity, IRoomEntity } from '../../libs/interfaces'
 import { formatTime } from '../../libs'
@@ -37,7 +38,7 @@ const Info = styled.div`
 
 const columns = [
   { dataIndex: 'userName', title: '姓名' },
-  { dataIndex: 'signTime', title: '到场时间' },
+  { dataIndex: 'signTime', title: '到场时间', render: formatTime },
   { dataIndex: 'signDesc', title: '到场结果' },
   { dataIndex: 'cameraName', title: '摄像头' },
   { dataIndex: 'image', title: '识别结果(人脸库vs抓拍图)' }
@@ -53,7 +54,11 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
 }) => {
   const [meeting] = useFetch<IMeetingEntity>(`/api/meeting/${params.mid}`)
   const [room] = useFetch<IRoomEntity>(`/api/room/${params.rid}`)
+  const [config] = useFetch<IRoomConfig>(
+    `/api/room/config?mid=${params.mid}&rid=${params.rid}`
+  )
   const [cameraModal, setCameraModal] = React.useState(false)
+  const [configModal, setConfigModal] = React.useState(false)
 
   if (!meeting || !room) {
     return null
@@ -72,7 +77,7 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
           {formatTime(meeting.endTime)}
         </p>
         <Button onClick={() => setCameraModal(true)}>摄像头管理</Button>
-        <Button>设置</Button>
+        <Button onClick={() => setConfigModal(true)}>设置</Button>
       </Info>
       <XTable
         columns={columns}
@@ -86,6 +91,13 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
         onCancel={() => setCameraModal(false)}
       >
         <CameraManage rid={params.rid} />
+      </Modal>
+      <Modal
+        visible={configModal}
+        footer={null}
+        onCancel={() => setConfigModal(false)}
+      >
+        <Setting {...params} setModal={setConfigModal} defaultValues={config} />
       </Modal>
     </Container>
   )
