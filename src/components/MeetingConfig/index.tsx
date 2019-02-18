@@ -13,9 +13,10 @@ export interface IRoomConfig {
 
 interface IProps extends FormComponentProps {
   mid: string
-  rid: string
+  rid?: string
   defaultValues: IRoomConfig
   setModal: React.Dispatch<React.SetStateAction<boolean>>
+  afterSuccess?: () => void
 }
 
 const formItemLayout = {
@@ -34,22 +35,37 @@ const Setting: React.FunctionComponent<IProps> = ({
   setModal,
   defaultValues,
   mid,
-  rid
+  rid,
+  afterSuccess
 }) => {
   const handleSubmit = () => {
     validateFields(async (err, values) => {
       if (err) {
         return
       }
-      await request('/api/room/config', {
-        data: {
-          mid: +mid,
-          rid: +rid,
-          ...values
-        },
-        method: 'put',
-        type: 'json'
-      })
+      if (rid) {
+        await request('/api/room/config', {
+          data: {
+            mid: +mid,
+            rid: +rid,
+            ...values
+          },
+          method: 'put',
+          type: 'json'
+        })
+      } else {
+        await request('/api/meeting', {
+          data: {
+            ...defaultValues,
+            ...values
+          },
+          method: 'put',
+          type: 'json'
+        })
+        if (afterSuccess) {
+          afterSuccess()
+        }
+      }
       message.success('修改成功')
       setModal(false)
     })

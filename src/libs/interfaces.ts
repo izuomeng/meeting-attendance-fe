@@ -25,6 +25,10 @@ export interface IMeetingEntity {
   state: number
   createBy: string
   createTime: string
+  signWay: number
+  signTime: string
+  collectHz: number
+  collectOutInfo: number
   rooms: IRoomEntity[]
   users: IUSerEntity[]
 }
