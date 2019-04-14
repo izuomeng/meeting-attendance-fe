@@ -15,6 +15,84 @@
   resolved "https://registry.yarnpkg.com/@ant-design/icons/-/icons-1.1.16.tgz#ac6426216934e3f4bc108f2f48f92ed66789235e"
   integrity sha512-0zNVP5JYBJkfMi9HotN6QBQjF3SFmUlumJNJXZIH+pZWp/5EbrCczzlG3YTmBWoyRHAsuOGIjSFIy8v/76DTPg==
 
+"@antv/adjust@~0.1.0":
+  version "0.1.1"
+  resolved "http://bnpm.byted.org/@antv/adjust/download/@antv/adjust-0.1.1.tgz#e263ab0e1a1941a648842fc086cf65a7e3b75e98"
+  integrity sha1-4mOrDhoZQaZIhC/Ahs9lp+O3Xpg=
+  dependencies:
+    "@antv/util" "~1.3.1"
+
+"@antv/attr@~0.1.2":
+  version "0.1.2"
+  resolved "http://bnpm.byted.org/@antv/attr/download/@antv/attr-0.1.2.tgz#2eeb122fcaaf851a2d8749abc7c60519d3f77e37"
+  integrity sha1-LusSL8qvhRoth0mrx8YFGdP3fjc=
+  dependencies:
+    "@antv/util" "~1.3.1"
+
+"@antv/component@~0.3.2":
+  version "0.3.2"
+  resolved "http://bnpm.byted.org/@antv/component/download/@antv/component-0.3.2.tgz#418bd9612c0720560534c117af74b57d851d35ca"
+  integrity sha1-QYvZYSwHIFYFNMEXr3S1fYUdNco=
+  dependencies:
+    "@antv/attr" "~0.1.2"
+    "@antv/g" "~3.3.5"
+    "@antv/util" "~1.3.1"
+    wolfy87-eventemitter "~5.1.0"
+
+"@antv/coord@~0.1.0":
+  version "0.1.0"
+  resolved "http://bnpm.byted.org/@antv/coord/download/@antv/coord-0.1.0.tgz#48a80ae36d07552f96657e7f8095227c63f0c0a9"
+  integrity sha1-SKgK420HVS+WZX5/gJUifGPwwKk=
+  dependencies:
+    "@antv/util" "~1.3.1"
+
+"@antv/g2@^3.5.3":
+  version "3.5.3"
+  resolved "http://bnpm.byted.org/@antv/g2/download/@antv/g2-3.5.3.tgz#8451719aac860690b67a409d5fb7b06802c4aca6"
+  integrity sha1-hFFxmqyGBpC2ekCdX7ewaALErKY=
+  dependencies:
+    "@antv/adjust" "~0.1.0"
+    "@antv/attr" "~0.1.2"
+    "@antv/component" "~0.3.2"
+    "@antv/coord" "~0.1.0"
+    "@antv/g" "~3.3.6"
+    "@antv/scale" "~0.1.1"
+    "@antv/util" "~1.3.1"
+    venn.js "~0.2.20"
+    wolfy87-eventemitter "~5.1.0"
+
+"@antv/g@~3.3.5", "@antv/g@~3.3.6":
+  version "3.3.6"
+  resolved "http://bnpm.byted.org/@antv/g/download/@antv/g-3.3.6.tgz#11fed9ddc9ed4e5a2aa244b7c8abb982a003f201"
+  integrity sha1-Ef7Z3cntTloqokS3yKu5gqAD8gE=
+  dependencies:
+    "@antv/gl-matrix" "~2.7.1"
+    "@antv/util" "~1.3.1"
+    d3-ease "~1.0.3"
+    d3-interpolate "~1.1.5"
+    d3-timer "~1.0.6"
+    wolfy87-eventemitter "~5.1.0"
+
+"@antv/gl-matrix@^2.7.1", "@antv/gl-matrix@~2.7.1":
+  version "2.7.1"
+  resolved "http://bnpm.byted.org/@antv/gl-matrix/download/@antv/gl-matrix-2.7.1.tgz#acb8e37f7ab3df01345aba4372d7942be42eba14"
+  integrity sha1-rLjjf3qz3wE0WrpDcteUK+QuuhQ=
+
+"@antv/scale@~0.1.1":
+  version "0.1.2"
+  resolved "http://bnpm.byted.org/@antv/scale/download/@antv/scale-0.1.2.tgz#bd9cb33033d8944b52c3e0e4accfd60541c3c147"
+  integrity sha1-vZyzMDPYlEtSw+DkrM/WBUHDwUc=
+  dependencies:
+    "@antv/util" "~1.3.1"
+    fecha "~2.3.3"
+
+"@antv/util@~1.3.1":
+  version "1.3.1"
+  resolved "http://bnpm.byted.org/@antv/util/download/@antv/util-1.3.1.tgz#30a34b201ff9126ec0d58c72c8166a9c3e644ccd"
+  integrity sha1-MKNLIB/5Em7A1YxyyBZqnD5kTM0=
+  dependencies:
+    "@antv/gl-matrix" "^2.7.1"
+
 "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -90,13 +168,6 @@
   version "4.14.119"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.119.tgz#be847e5f4bc3e35e46d041c394ead8b603ad8b39"
   integrity sha512-Z3TNyBL8Vd/M9D9Ms2S3LmFq2sSMzahodD6rCS9V2N44HUMINb75jNkSuwAx7eo2ufqTdfOdtGQpNbieUjPQmw==
-
-"@types/moment@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@types/moment/-/moment-2.13.0.tgz#604ebd189bc3bc34a1548689404e61a2a4aac896"
-  integrity sha1-YE69GJvDvDShVIaJQE5hoqSqyJY=
-  dependencies:
-    moment "*"
 
 "@types/node@*", "@types/node@^10.12.18":
   version "10.12.18"
@@ -308,6 +379,11 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+amdefine@>=0.0.4:
+  version "1.0.1"
+  resolved "http://bnpm.byted.org/amdefine/download/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+  integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
 ansi-align@^2.0.0:
   version "2.0.0"
@@ -1911,7 +1987,7 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chalk@1.1.3, chalk@^1.1.3:
+chalk@1.1.3, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
   integrity sha1-qBFcVeSnAv5NFQq9OHKCKn4J/Jg=
@@ -2351,6 +2427,11 @@ content-type@~1.0.4:
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
+contour_plot@^0.0.1:
+  version "0.0.1"
+  resolved "http://bnpm.byted.org/contour_plot/download/contour_plot-0.0.1.tgz#475870f032b8e338412aa5fc507880f0bf495c77"
+  integrity sha1-R1hw8DK44zhBKqX8UHiA8L9JXHc=
+
 convert-source-map@^1.4.0, convert-source-map@^1.5.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.6.0.tgz#51b537a8c43e0f04dec1993bffcdd504e758ac20"
@@ -2674,6 +2755,57 @@ cyclist@~0.2.2:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   integrity sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
 
+d3-color@1:
+  version "1.2.3"
+  resolved "http://bnpm.byted.org/d3-color/download/d3-color-1.2.3.tgz#6c67bb2af6df3cc8d79efcc4d3a3e83e28c8048f"
+  integrity sha1-bGe7KvbfPMjXnvzE06PoPijIBI8=
+
+d3-dispatch@1:
+  version "1.0.5"
+  resolved "http://bnpm.byted.org/d3-dispatch/download/d3-dispatch-1.0.5.tgz#e25c10a186517cd6c82dd19ea018f07e01e39015"
+  integrity sha1-4lwQoYZRfNbILdGeoBjwfgHjkBU=
+
+d3-ease@1, d3-ease@~1.0.3:
+  version "1.0.5"
+  resolved "http://bnpm.byted.org/d3-ease/download/d3-ease-1.0.5.tgz#8ce59276d81241b1b72042d6af2d40e76d936ffb"
+  integrity sha1-jOWSdtgSQbG3IELWry1A522Tb/s=
+
+d3-interpolate@1:
+  version "1.3.2"
+  resolved "http://bnpm.byted.org/d3-interpolate/download/d3-interpolate-1.3.2.tgz#417d3ebdeb4bc4efcc8fd4361c55e4040211fd68"
+  integrity sha1-QX0+vetLxO/Mj9Q2HFXkBAIR/Wg=
+  dependencies:
+    d3-color "1"
+
+d3-interpolate@~1.1.5:
+  version "1.1.6"
+  resolved "http://bnpm.byted.org/d3-interpolate/download/d3-interpolate-1.1.6.tgz#2cf395ae2381804df08aa1bf766b7f97b5f68fb6"
+  integrity sha1-LPOVriOBgE3wiqG/dmt/l7X2j7Y=
+  dependencies:
+    d3-color "1"
+
+d3-selection@^1.0.2, d3-selection@^1.1.0:
+  version "1.4.0"
+  resolved "http://bnpm.byted.org/d3-selection/download/d3-selection-1.4.0.tgz#ab9ac1e664cf967ebf1b479cc07e28ce9908c474"
+  integrity sha1-q5rB5mTPln6/G0ecwH4ozpkIxHQ=
+
+d3-timer@1, d3-timer@~1.0.6:
+  version "1.0.9"
+  resolved "http://bnpm.byted.org/d3-timer/download/d3-timer-1.0.9.tgz#f7bb8c0d597d792ff7131e1c24a36dd471a471ba"
+  integrity sha1-97uMDVl9eS/3Ex4cJKNt1HGkcbo=
+
+d3-transition@^1.0.1:
+  version "1.2.0"
+  resolved "http://bnpm.byted.org/d3-transition/download/d3-transition-1.2.0.tgz#f538c0e21b2aa1f05f3e965f8567e81284b3b2b8"
+  integrity sha1-9TjA4hsqofBfPpZfhWfoEoSzsrg=
+  dependencies:
+    d3-color "1"
+    d3-dispatch "1"
+    d3-ease "1"
+    d3-interpolate "1"
+    d3-selection "^1.1.0"
+    d3-timer "1"
+
 d@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
@@ -2738,7 +2870,7 @@ decode-uri-component@^0.2.0:
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
 
-deep-equal@^1.0.1:
+deep-equal@^1.0.1, deep-equal@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
   integrity sha1-9dJgKStmDghO/0zbyfCK0yR0SLU=
@@ -2801,7 +2933,7 @@ define-property@^2.0.2:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
 
-defined@^1.0.0:
+defined@^1.0.0, defined@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/defined/-/defined-1.0.0.tgz#c98d9bcef75674188e110969151199e39b1fa693"
   integrity sha1-yY2bzvdWdBiOEQlpFRGZ45sfppM=
@@ -3191,6 +3323,18 @@ error-ex@^1.2.0:
   dependencies:
     is-arrayish "^0.2.1"
 
+es-abstract@^1.5.0:
+  version "1.13.0"
+  resolved "http://bnpm.byted.org/es-abstract/download/es-abstract-1.13.0.tgz#ac86145fdd5099d8dd49558ccba2eaf9b88e24e9"
+  integrity sha1-rIYUX91QmdjdSVWMy6Lq+biOJOk=
+  dependencies:
+    es-to-primitive "^1.2.0"
+    function-bind "^1.1.1"
+    has "^1.0.3"
+    is-callable "^1.1.4"
+    is-regex "^1.0.4"
+    object-keys "^1.0.12"
+
 es-abstract@^1.7.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.12.0.tgz#9dbbdd27c6856f0001421ca18782d786bf8a6165"
@@ -3202,7 +3346,7 @@ es-abstract@^1.7.0:
     is-callable "^1.1.3"
     is-regex "^1.0.4"
 
-es-to-primitive@^1.1.1:
+es-to-primitive@^1.1.1, es-to-primitive@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/es-to-primitive/-/es-to-primitive-1.2.0.tgz#edf72478033456e8dda8ef09e00ad9650707f377"
   integrity sha512-qZryBOJjV//LaxLTV6UC//WewneB3LcXOL9NP++ozKVXsIIIpm/2c13UDiD9Jp2eThsecw9m3jPqDwTyobcdbg==
@@ -3699,6 +3843,11 @@ fbjs@^0.8.0, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.5, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
+fecha@~2.3.3:
+  version "2.3.3"
+  resolved "http://bnpm.byted.org/fecha/download/fecha-2.3.3.tgz#948e74157df1a32fd1b12c3a3c3cdcb6ec9d96cd"
+  integrity sha1-lI50FX3xoy/RsSw6PDzctuydls0=
+
 figgy-pudding@^3.0.0, figgy-pudding@^3.1.0, figgy-pudding@^3.4.1, figgy-pudding@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
@@ -3836,12 +3985,30 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.1"
     readable-stream "^2.0.4"
 
+fmin@0.0.2:
+  version "0.0.2"
+  resolved "http://bnpm.byted.org/fmin/download/fmin-0.0.2.tgz#59bbb40d43ffdc1c94cd00a568c41f95f1973017"
+  integrity sha1-Wbu0DUP/3ByUzQClaMQflfGXMBc=
+  dependencies:
+    contour_plot "^0.0.1"
+    json2module "^0.0.3"
+    rollup "^0.25.8"
+    tape "^4.5.1"
+    uglify-js "^2.6.2"
+
 follow-redirects@^1.0.0:
   version "1.5.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.9.tgz#c9ed9d748b814a39535716e531b9196a845d89c6"
   integrity sha512-Bh65EZI/RU8nx0wbYF9shkFZlqLP+6WT/5FnA3cE/djNSuKNHJEinGGZgu/cQEkeeb2GdFOgenAmn8qaqYke2w==
   dependencies:
     debug "=3.1.0"
+
+for-each@~0.3.3:
+  version "0.3.3"
+  resolved "http://bnpm.byted.org/for-each/download/for-each-0.3.3.tgz#69b447e88a0a5d32c3e7084f3f1710034b21376e"
+  integrity sha1-abRH6IoKXTLD5whPPxcQA0shN24=
+  dependencies:
+    is-callable "^1.1.3"
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
@@ -3994,7 +4161,7 @@ fstream@^1.0.0, fstream@^1.0.2:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-function-bind@^1.1.1:
+function-bind@^1.0.2, function-bind@^1.1.1, function-bind@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
@@ -4099,7 +4266,7 @@ glob2base@^0.0.12:
   dependencies:
     find-index "^0.1.1"
 
-glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3:
+glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@~7.1.3:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"
   integrity sha512-vcfuiIxogLV4DlGBHIUOwI0IbrJ8HWPc4MU7HzviGeNho/UJDfi6B5p3sHeWIQ0KGIU0Jpxi5ZHxemQfLkkAwQ==
@@ -4332,7 +4499,7 @@ has-values@^1.0.0:
     is-number "^3.0.0"
     kind-of "^4.0.0"
 
-has@^1.0.1:
+has@^1.0.1, has@^1.0.3, has@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/has/-/has-1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
   integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
@@ -5726,6 +5893,13 @@ json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
+json2module@^0.0.3:
+  version "0.0.3"
+  resolved "http://bnpm.byted.org/json2module/download/json2module-0.0.3.tgz#00fb5f4a9b7adfc3f0647c29cb17bcd1979be9b2"
+  integrity sha1-APtfSpt638PwZHwpyxe80Zeb6bI=
+  dependencies:
+    rw "^1.3.2"
+
 json2mq@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/json2mq/-/json2mq-0.2.0.tgz#b637bd3ba9eabe122c83e9720483aeb10d2c904a"
@@ -6502,7 +6676,7 @@ minimist@0.0.8:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
   integrity sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
 
-minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
+minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
@@ -6581,7 +6755,7 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkd
   dependencies:
     minimist "0.0.8"
 
-moment@*, moment@2.x, moment@^2.22.2, moment@^2.23.0:
+moment@2.x, moment@^2.22.2, moment@^2.23.0:
   version "2.23.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.23.0.tgz#759ea491ac97d54bac5ad776996e2a58cc1bc225"
   integrity sha512-3IE39bHVqFbWWaPOMHZF98Q9c3LDKGTmypMiTM2QygGXXElkFWIH7GxfmlwmY2vwa+wmNsoYZmG2iusf1ZjJoA==
@@ -7140,6 +7314,11 @@ object-copy@^0.1.0:
     copy-descriptor "^0.1.0"
     define-property "^0.2.5"
     kind-of "^3.0.3"
+
+object-inspect@~1.6.0:
+  version "1.6.0"
+  resolved "http://bnpm.byted.org/object-inspect/download/object-inspect-1.6.0.tgz#c70b6cbf72f274aab4c34c0c82f5167bf82cf15b"
+  integrity sha1-xwtsv3LydKq0w0wMgvUWe/gs8Vs=
 
 object-keys@^1.0.12:
   version "1.0.12"
@@ -9309,6 +9488,13 @@ resolve@^1.3.2:
   dependencies:
     path-parse "^1.0.5"
 
+resolve@~1.10.0:
+  version "1.10.0"
+  resolved "http://bnpm.byted.org/resolve/download/resolve-1.10.0.tgz#3bdaaeaf45cc07f375656dfd2e54ed0810b101ba"
+  integrity sha1-O9qur0XMB/N1ZW39LlTtCBCxAbo=
+  dependencies:
+    path-parse "^1.0.6"
+
 restore-cursor@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
@@ -9316,6 +9502,13 @@ restore-cursor@^2.0.0:
   dependencies:
     onetime "^2.0.0"
     signal-exit "^3.0.2"
+
+resumer@~0.0.0:
+  version "0.0.0"
+  resolved "http://bnpm.byted.org/resumer/download/resumer-0.0.0.tgz#f1e8f461e4064ba39e82af3cdc2a8c893d076759"
+  integrity sha1-8ej0YeQGS6Oegq883CqMiT0HZ1k=
+  dependencies:
+    through "~2.3.4"
 
 ret@~0.1.10:
   version "0.1.15"
@@ -9362,6 +9555,15 @@ rmc-feedback@^2.0.0:
     babel-runtime "6.x"
     classnames "^2.2.5"
 
+rollup@^0.25.8:
+  version "0.25.8"
+  resolved "http://bnpm.byted.org/rollup/download/rollup-0.25.8.tgz#bf6ce83b87510d163446eeaa577ed6a6fc5835e0"
+  integrity sha1-v2zoO4dRDRY0Ru6qV37WpvxYNeA=
+  dependencies:
+    chalk "^1.1.1"
+    minimist "^1.2.0"
+    source-map-support "^0.3.2"
+
 run-async@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.3.0.tgz#0371ab4ae0bdd720d4166d7dfda64ff7a445a6c0"
@@ -9375,6 +9577,11 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   integrity sha1-6Eg5bwV9Ij8kOGkkYY4laUFh7Ec=
   dependencies:
     aproba "^1.1.1"
+
+rw@^1.3.2:
+  version "1.3.3"
+  resolved "http://bnpm.byted.org/rw/download/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
+  integrity sha1-P4Yt+pGrdmsUiF700BEkv9oHT7Q=
 
 rx-lite-aggregates@^4.0.8:
   version "4.0.8"
@@ -9792,6 +9999,13 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
+source-map-support@^0.3.2:
+  version "0.3.3"
+  resolved "http://bnpm.byted.org/source-map-support/download/source-map-support-0.3.3.tgz#34900977d5ba3f07c7757ee72e73bb1a9b53754f"
+  integrity sha1-NJAJd9W6PwfHdX7nLnO7GptTdU8=
+  dependencies:
+    source-map "0.1.32"
+
 source-map-support@^0.4.15:
   version "0.4.18"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.18.tgz#0286a6de8be42641338594e97ccea75f0a2c585f"
@@ -9811,6 +10025,13 @@ source-map-url@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.0.tgz#3e935d7ddd73631b97659956d55128e87b5084a3"
   integrity sha1-PpNdfd1zYxuXZZlW1VEo6HtQhKM=
+
+source-map@0.1.32:
+  version "0.1.32"
+  resolved "http://bnpm.byted.org/source-map/download/source-map-0.1.32.tgz#c8b6c167797ba4740a8ea33252162ff08591b266"
+  integrity sha1-yLbBZ3l7pHQKjqMyUhYv8IWRsmY=
+  dependencies:
+    amdefine ">=0.0.4"
 
 source-map@^0.5.3, source-map@^0.5.6, source-map@^0.5.7, source-map@~0.5.1:
   version "0.5.7"
@@ -10026,6 +10247,15 @@ string-width@^1.0.1, string-width@^1.0.2:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
 
+string.prototype.trim@~1.1.2:
+  version "1.1.2"
+  resolved "http://bnpm.byted.org/string.prototype.trim/download/string.prototype.trim-1.1.2.tgz#d04de2c89e137f4d7d206f086b5ed2fae6be8cea"
+  integrity sha1-0E3iyJ4Tf019IG8Ia17S+ua+jOo=
+  dependencies:
+    define-properties "^1.1.2"
+    es-abstract "^1.5.0"
+    function-bind "^1.0.2"
+
 string_decoder@^1.0.0, string_decoder@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
@@ -10227,6 +10457,25 @@ tapable@^0.2.7:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.2.9.tgz#af2d8bbc9b04f74ee17af2b4d9048f807acd18a8"
   integrity sha512-2wsvQ+4GwBvLPLWsNfLCDYGsW6xb7aeC6utq2Qh0PFwgEy7K7dsma9Jsmb2zSQj7GvYAyUGSntLtsv++GmgL1A==
 
+tape@^4.5.1:
+  version "4.10.1"
+  resolved "http://bnpm.byted.org/tape/download/tape-4.10.1.tgz#f73be60888dcb120f08b57f947af65a829506a5f"
+  integrity sha1-9zvmCIjcsSDwi1f5R69lqClQal8=
+  dependencies:
+    deep-equal "~1.0.1"
+    defined "~1.0.0"
+    for-each "~0.3.3"
+    function-bind "~1.1.1"
+    glob "~7.1.3"
+    has "~1.0.3"
+    inherits "~2.0.3"
+    minimist "~1.2.0"
+    object-inspect "~1.6.0"
+    resolve "~1.10.0"
+    resumer "~0.0.0"
+    string.prototype.trim "~1.1.2"
+    through "~2.3.8"
+
 tar@^2.0.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/tar/-/tar-2.2.1.tgz#8e4d2a256c0e2185c6b18ad694aec968b83cb1d1"
@@ -10298,7 +10547,7 @@ through2@^2.0.0:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
-"through@>=2.2.7 <3", through@^2.3.6:
+"through@>=2.2.7 <3", through@^2.3.6, through@~2.3.4, through@~2.3.8:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
@@ -10600,7 +10849,7 @@ uglify-js@3.4.x, uglify-js@^3.0.13, uglify-js@^3.1.4:
     commander "~2.17.1"
     source-map "~0.6.1"
 
-uglify-js@^2.8.29:
+uglify-js@^2.6.2, uglify-js@^2.8.29:
   version "2.8.29"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.29.tgz#29c5733148057bb4e1f75df35b7a9cb72e6a59dd"
   integrity sha1-KcVzMUgFe7Th913zW3qcty5qWd0=
@@ -10860,6 +11109,15 @@ vendors@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.2.tgz#7fcb5eef9f5623b156bcea89ec37d63676f21801"
   integrity sha512-w/hry/368nO21AN9QljsaIhb9ZiZtZARoVH5f3CsFbawdLdayCgKRPup7CggujvySMxx0I91NOyxdVENohprLQ==
+
+venn.js@~0.2.20:
+  version "0.2.20"
+  resolved "http://bnpm.byted.org/venn.js/download/venn.js-0.2.20.tgz#3f0e50cc75cba1f58692a8a32f67bd7aaf1aa6fa"
+  integrity sha1-Pw5QzHXLofWGkqijL2e9eq8apvo=
+  dependencies:
+    d3-selection "^1.0.2"
+    d3-transition "^1.0.1"
+    fmin "0.0.2"
 
 verror@1.10.0:
   version "1.10.0"
@@ -11151,6 +11409,11 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
   integrity sha1-VDjNLqk7IC76Ohn+iIeu58lPnJ0=
+
+wolfy87-eventemitter@~5.1.0:
+  version "5.1.0"
+  resolved "http://bnpm.byted.org/wolfy87-eventemitter/download/wolfy87-eventemitter-5.1.0.tgz#35c1ac0dd1ac0c15e35d981508fc22084a13a011"
+  integrity sha1-NcGsDdGsDBXjXZgVCPwiCEoToBE=
 
 wordwrap@0.0.2:
   version "0.0.2"

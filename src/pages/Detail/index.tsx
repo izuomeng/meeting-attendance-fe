@@ -52,9 +52,11 @@ interface IParams {
 const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
   match: { params }
 }) => {
-  const [meeting] = useFetch<IMeetingEntity>(`/api/meeting/${params.mid}`)
-  const [room] = useFetch<IRoomEntity>(`/api/room/${params.rid}`)
-  const [config] = useFetch<IRoomConfig>(
+  const { data: meeting } = useFetch<IMeetingEntity>(
+    `/api/meeting/${params.mid}`
+  )
+  const { data: room } = useFetch<IRoomEntity>(`/api/room/${params.rid}`)
+  const { data: config } = useFetch<IRoomConfig>(
     `/api/room/config?mid=${params.mid}&rid=${params.rid}`
   )
   const [cameraModal, setCameraModal] = React.useState(false)

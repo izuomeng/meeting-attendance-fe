@@ -5,6 +5,8 @@ import { WithFetchSimple } from '../../components/WithFetch'
 import { IListResponse } from '../../libs/interfaces'
 import { withRouter, RouteComponentProps } from 'react-router'
 
+import ShootImg from '../../images/shoot.png';
+
 export interface ISignItem {
   id: number
   meetingRoom: string
@@ -20,7 +22,7 @@ export interface ISignItem {
 const Cover = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url(https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png);
+  background-image: url(${ShootImg});
   /* 16:9 */
   width: 100%;
   padding-top: 56.25%;

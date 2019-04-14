@@ -35,7 +35,9 @@ const RightItem = styled.div`
   flex: 1;
 `
 
-const Item = styled<React.SFC<{ label: string; className?: string }>>(props => (
+const Item = styled<
+  React.FC<{ label: string; className?: string; children: React.ReactNode }>
+>(props => (
   <div className={props.className}>
     <LeftItem>
       <span>{props.label}</span>
@@ -65,7 +67,7 @@ function formatTime(timeStamp: string): string {
   return moment(timeStamp).format('hh:mm')
 }
 
-const MeetingInfo: React.SFC<{
+const MeetingInfo: React.FC<{
   className?: string
   id: string
 }> = props => (

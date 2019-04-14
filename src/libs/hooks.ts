@@ -35,5 +35,5 @@ export function useFetch<T>(url: string) {
       })
   })
 
-  return [data as T]
+  return { data: data as T, loading }
 }

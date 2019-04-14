@@ -11,7 +11,6 @@
 import * as React from 'react'
 import { isEqual } from 'lodash'
 import request from '../../libs/request'
-import { useIsMounted } from '../../libs/hooks'
 import Loading from '../../components/Loading'
 
 interface IProps<T> {
@@ -96,33 +95,5 @@ export const WithFetchSimple: React.SFC<IPropsSimple<any>> = ({
     }}
   </WithFetch>
 )
-
-export function useFetch(url: string) {
-  const [data, setData] = React.useState(null as any)
-  const [loading, setLoading] = React.useState(false)
-  const isMounted = useIsMounted()
-
-  React.useEffect(() => {
-    if (data || loading) {
-      return
-    }
-    setLoading(true)
-    request(url)
-      .then(res => {
-        if (!isMounted()) {
-          return
-        }
-        setData(res.data)
-        setLoading(false)
-      })
-      .catch(() => {
-        if (isMounted()) {
-          setLoading(false)
-        }
-      })
-  })
-
-  return { data, loading }
-}
 
 export default WithFetch
