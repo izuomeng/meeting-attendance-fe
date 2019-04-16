@@ -8,7 +8,7 @@ export function customFormat(str: string, format: string): string {
 }
 
 export function formatTime(time: string): string {
-  return customFormat(time, 'hh:mm')
+  return customFormat(time, 'HH:mm')
 }
 
 export function formatDate(date: string): string {

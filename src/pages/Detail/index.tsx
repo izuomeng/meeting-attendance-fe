@@ -2,7 +2,7 @@ import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Carousel, Button, Modal } from 'antd'
 import styled from 'styled-components'
-import XTable from '../../components/XTable'
+import XTable, { IRefs } from '../../components/XTable'
 import Video from './Video'
 import CameraManage from './Camera'
 import Setting, { IRoomConfig } from '../../components/MeetingConfig'
@@ -10,16 +10,15 @@ import { useFetch } from '../../libs/hooks'
 import { IMeetingEntity, IRoomEntity } from '../../libs/interfaces'
 import { formatTime } from '../../libs'
 
+const DEFAULT_IMAGE = 'http://p3.pstatp.com/origin/1e0730001764139a48f85'
+
 const Container = styled.div`
   & .ant-carousel {
     width: 40%;
     display: inline-block;
   }
   & .ant-carousel .slick-slide {
-    text-align: center;
-    height: 240px;
-    line-height: 160px;
-    background: #364d79;
+    height: 320px;
     overflow: hidden;
   }
   & .ant-carousel .slick-slide h3 {
@@ -31,8 +30,29 @@ const Info = styled.div`
   width: 55%;
   padding-left: 24px;
 
-  & button:nth-of-type(2) {
+  & button:nth-of-type(n + 2) {
     margin-left: 12px;
+  }
+`
+
+const Compare = styled.div<{ faceHubUrl: string; takenUrl: string }>`
+  display: flex;
+  width: 160px;
+  justify-content: space-between;
+  & > div {
+    width: 48%;
+    height: 70px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  & > div:first-child {
+    background-image: ${props =>
+      props.faceHubUrl ? `url(${props.faceHubUrl})` : ''};
+  }
+  & > div:last-child {
+    background-image: ${props =>
+      props.takenUrl ? `url(${props.takenUrl})` : ''};
   }
 `
 
@@ -40,14 +60,34 @@ const columns = [
   { dataIndex: 'userName', title: '姓名' },
   { dataIndex: 'signTime', title: '到场时间', render: formatTime },
   { dataIndex: 'signDesc', title: '到场结果' },
-  { dataIndex: 'cameraName', title: '摄像头' },
-  { dataIndex: 'image', title: '识别结果(人脸库vs抓拍图)' }
+  {
+    dataIndex: 'cameraName',
+    title: '摄像头',
+    render() {
+      return '摄像头1号'
+    }
+  },
+  {
+    dataIndex: 'image',
+    title: '识别结果(人脸库vs抓拍图)',
+    render(_: any, row: any) {
+      return (
+        <Compare faceHubUrl={row.face} takenUrl={row.image || DEFAULT_IMAGE}>
+          <div />
+          <div />
+        </Compare>
+      )
+    }
+  }
 ]
 
 interface IParams {
   mid: string
   rid: string
 }
+
+const ws = new WebSocket('ws://localhost:8080')
+const refs: { table: null | IRefs } = { table: null }
 
 const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
   match: { params }
@@ -61,8 +101,29 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
   )
   const [cameraModal, setCameraModal] = React.useState(false)
   const [configModal, setConfigModal] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
+  // 告知服务端开始进行人脸比对
+  const passport = JSON.stringify({ type: 1, mid: params.mid, rid: params.rid })
 
-  if (!meeting || !room) {
+  ws.onopen = () => {
+    console.log('Connection open ...')
+    ws.send(passport)
+  }
+
+  ws.onmessage = evt => {
+    const message = JSON.parse(evt.data)
+    // 1表示重新请求数据
+    if (message.type === 1 && refs.table) {
+      refs.table.fetchData()
+      setLoading(false)
+    }
+  }
+
+  ws.onclose = () => {
+    console.log('Connection closed.')
+  }
+
+  if (!meeting || !room || !config) {
     return null
   }
   return (
@@ -72,19 +133,32 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
         <Video {...params} />
       </Carousel>
       <Info>
+        <p>会议标题: {meeting.title}</p>
         <p>会场名称: {room.roomName}</p>
         <p>会场地址: {room.location}</p>
         <p>
           会议时间: {formatTime(meeting.startTime)}-
           {formatTime(meeting.endTime)}
         </p>
+        <p>签到时间: {formatTime(config.signTime)}</p>
         <Button onClick={() => setCameraModal(true)}>摄像头管理</Button>
         <Button onClick={() => setConfigModal(true)}>设置</Button>
+        <Button
+          loading={loading}
+          type="danger"
+          onClick={() => {
+            ws.send(passport)
+            setLoading(true)
+          }}
+        >
+          Send
+        </Button>
       </Info>
       <XTable
         columns={columns}
         url={`/api/room/sign?mid=${params.mid}&rid=${params.rid}`}
         style={{ marginTop: 12 }}
+        refer={r => (refs.table = r)}
       />
       <Modal
         width="50%"
