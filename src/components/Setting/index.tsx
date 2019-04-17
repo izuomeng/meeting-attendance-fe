@@ -93,6 +93,7 @@ const Setting: React.FunctionComponent<IProps> = ({
             <Radio value={300}>5分钟</Radio>
             <Radio value={60}>1分钟</Radio>
             <Radio value={30}>30秒</Radio>
+            <Radio value={10}>10秒</Radio>
           </Radio.Group>
         )}
       </Form.Item>

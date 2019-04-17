@@ -4,7 +4,7 @@ import Filter, { IFormValues } from '../../components/Filter'
 import XTable, { IRefs } from '../../components/XTable'
 import { IMeetingEntity } from '../../libs/interfaces'
 import { formatTime, formatDate } from '../../libs'
-import Setting from '../../components/MeetingConfig'
+import Setting from '../../components/Setting'
 
 const table = { current: {} as IRefs }
 
@@ -13,6 +13,7 @@ const Settings: React.FunctionComponent = () => {
   const [currentMeeting, setCurrentMeeting] = React.useState(
     {} as IMeetingEntity
   )
+  const [roomListModal, setRoomListModal] = React.useState(false)
 
   const params = { date: '', title: '' }
   const columns = [
@@ -73,9 +74,28 @@ const Settings: React.FunctionComponent = () => {
             >
               编辑
             </a>
-            <a style={{ marginLeft: 8 }}>修改会场</a>
+            <a
+              onClick={() => {
+                setCurrentMeeting(record)
+                setRoomListModal(true)
+              }}
+              style={{ marginLeft: 8 }}
+            >
+              修改会场
+            </a>
           </>
         )
+      }
+    }
+  ]
+  const roomColumns = [
+    { dataIndex: 'roomName', title: '会场' },
+    { dataIndex: 'roomLocation', title: '地点' },
+    {
+      dataIndex: 'action',
+      title: '操作',
+      render(_: any, row: any) {
+        return <a href={`/detail/${currentMeeting.id}/${row.id}?setting=1`}>设置</a>
       }
     }
   ]
@@ -108,6 +128,16 @@ const Settings: React.FunctionComponent = () => {
           defaultValues={currentMeeting}
           mid={currentMeeting.id}
           afterSuccess={table.current.fetchData}
+        />
+      </Modal>
+      <Modal
+        visible={roomListModal}
+        footer={null}
+        onCancel={() => setRoomListModal(false)}
+      >
+        <XTable
+          url={`/api/rooms?mid=${currentMeeting.id}`}
+          columns={roomColumns}
         />
       </Modal>
     </>

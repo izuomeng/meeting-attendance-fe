@@ -5,10 +5,10 @@ import styled from 'styled-components'
 import XTable, { IRefs } from '../../components/XTable'
 import Video from './Video'
 import CameraManage from './Camera'
-import Setting, { IRoomConfig } from '../../components/MeetingConfig'
+import Setting, { IRoomConfig } from '../../components/Setting'
 import { useFetch } from '../../libs/hooks'
 import { IMeetingEntity, IRoomEntity } from '../../libs/interfaces'
-import { formatTime } from '../../libs'
+import { formatTime, getQuery } from '../../libs'
 
 const DEFAULT_IMAGE = 'http://p3.pstatp.com/origin/1e0730001764139a48f85'
 
@@ -29,9 +29,11 @@ const Info = styled.div`
   float: right;
   width: 55%;
   padding-left: 24px;
-
   & button:nth-of-type(n + 2) {
     margin-left: 12px;
+  }
+  & > p {
+    color: rgba(0, 0, 0, 0.7);
   }
 `
 
@@ -88,6 +90,7 @@ interface IParams {
 
 const ws = new WebSocket('ws://localhost:8080')
 const refs: { table: null | IRefs } = { table: null }
+let tid = setTimeout(() => null, 0)
 
 const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
   match: { params }
@@ -100,14 +103,24 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
     `/api/room/config?mid=${params.mid}&rid=${params.rid}`
   )
   const [cameraModal, setCameraModal] = React.useState(false)
-  const [configModal, setConfigModal] = React.useState(false)
+  const [configModal, setConfigModal] = React.useState(!!getQuery().setting)
   const [loading, setLoading] = React.useState(false)
+
+  if (!meeting || !room || !config) {
+    return null
+  }
+
   // 告知服务端开始进行人脸比对
   const passport = JSON.stringify({ type: 1, mid: params.mid, rid: params.rid })
+  const loop = () => {
+    clearTimeout(tid)
+    ws.send(passport)
+    tid = setTimeout(loop, config.collectHz * 1000)
+  }
 
   ws.onopen = () => {
     console.log('Connection open ...')
-    ws.send(passport)
+    loop()
   }
 
   ws.onmessage = evt => {
@@ -116,6 +129,8 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
     if (message.type === 1 && refs.table) {
       refs.table.fetchData()
       setLoading(false)
+    } else if (message.type === 5) {
+      setLoading(false)
     }
   }
 
@@ -123,9 +138,6 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
     console.log('Connection closed.')
   }
 
-  if (!meeting || !room || !config) {
-    return null
-  }
   return (
     <Container>
       <Carousel>
@@ -133,7 +145,7 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
         <Video {...params} />
       </Carousel>
       <Info>
-        <p>会议标题: {meeting.title}</p>
+        <h2>{meeting.title}</h2>
         <p>会场名称: {room.roomName}</p>
         <p>会场地址: {room.location}</p>
         <p>
@@ -147,8 +159,11 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
           loading={loading}
           type="danger"
           onClick={() => {
-            ws.send(passport)
-            setLoading(true)
+            // OPEN
+            if (ws.readyState === 1) {
+              ws.send(passport)
+              setLoading(true)
+            }
           }}
         >
           Send
