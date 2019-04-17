@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import XTable, { IRefs } from '../../components/XTable'
 import { WithFetchSimple } from '../../components/WithFetch'
 import request from '../../libs/request'
-import { ISignItem } from './Common'
+import { ISignItem } from './I'
 
 interface IStatistics {
   total: number

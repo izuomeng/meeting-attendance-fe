@@ -25,3 +25,7 @@ export const Compare = styled(C)<{ url1: string; url2: string }>`
     background-image: ${props => (props.url2 ? `url(${props.url2})` : '')};
   }
 `
+export const Line = styled.div`
+  height: 1px;
+  background-color: #e6e6e6;
+`

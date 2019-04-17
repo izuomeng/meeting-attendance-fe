@@ -4,20 +4,9 @@ import styled from 'styled-components'
 import { WithFetchSimple } from '../../components/WithFetch'
 import { IListResponse } from '../../libs/interfaces'
 import { withRouter, RouteComponentProps } from 'react-router'
+import { ISignItem } from './I';
 
 import ShootImg from '../../images/shoot.png';
-
-export interface ISignItem {
-  id: number
-  meetingRoom: string
-  phone: string
-  state: number
-  userId: number
-  userName: string
-  email: string
-  signTime: string
-  attendance: number
-}
 
 const Cover = styled.div`
   background-repeat: no-repeat;

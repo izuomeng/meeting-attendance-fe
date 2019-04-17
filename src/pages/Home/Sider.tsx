@@ -4,8 +4,9 @@ import * as moment from 'moment'
 import { Tabs, Tree } from 'antd'
 import { WithFetchSimple } from '../../components/WithFetch'
 import Empty from '../../components/Empty'
-import { ISignItem } from './Common'
+import { ISignItem } from './I'
 import { IListResponse } from '../../libs/interfaces'
+import {DEFAULT_IMAGE} from '../../libs/const';
 
 const Container = styled.div`
   padding-left: 24px;
@@ -80,7 +81,7 @@ const SignListItem: React.SFC<{ data: ISignItem; className?: string }> = ({
       <span>{data.userName}</span>
       <br />
       {data.signTime ? (
-        <span>{moment(data.signTime).format('hh:mm:ss')}</span>
+        <span>{moment(data.signTime).format('HH:mm:ss')}</span>
       ) : (
         <span>00:00:00</span>
       )}
@@ -88,14 +89,25 @@ const SignListItem: React.SFC<{ data: ISignItem; className?: string }> = ({
     <div />
   </div>
 )
-const StyledItem = styled(SignListItem)`
+const StyledItem = styled(SignListItem)<{ data: ISignItem }>`
   display: flex;
+  padding-bottom: 8px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid #e6e6e6;
   & > div:first-child,
   & > div:last-child {
     min-width: 80px;
     width: 33%;
     padding-top: 33%;
-    background-color: grey;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  & > div:first-child {
+    background-image: ${({ data }) => (data.face ? `url(${data.face})` : `url(${DEFAULT_IMAGE})`)};
+  }
+  & > div:last-child {
+    background-image: ${({ data }) => (data.image ? `url(${data.image})` : `url(${DEFAULT_IMAGE})`)};
   }
   & > div:nth-child(2) {
     flex: 1;
