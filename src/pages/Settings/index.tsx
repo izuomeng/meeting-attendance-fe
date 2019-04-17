@@ -3,7 +3,7 @@ import { Modal } from 'antd'
 import Filter, { IFormValues } from '../../components/Filter'
 import XTable, { IRefs } from '../../components/XTable'
 import { IMeetingEntity } from '../../libs/interfaces'
-import { formatTime, formatDate } from '../../libs'
+import { formatTime, formatDate, toFixed } from '../../libs'
 import Setting from '../../components/Setting'
 
 const table = { current: {} as IRefs }
@@ -45,7 +45,10 @@ const Settings: React.FunctionComponent = () => {
       dataIndex: 'collectHz',
       title: '采集频率',
       render(cell: number) {
-        return cell ? `${cell / 60}分钟` : '-'
+        if (!cell) {
+          return '-'
+        }
+        return cell >= 60 ? `${toFixed(cell / 60)}分钟` : `${cell}秒`
       }
     },
     {
@@ -95,7 +98,9 @@ const Settings: React.FunctionComponent = () => {
       dataIndex: 'action',
       title: '操作',
       render(_: any, row: any) {
-        return <a href={`/detail/${currentMeeting.id}/${row.id}?setting=1`}>设置</a>
+        return (
+          <a href={`/detail/${currentMeeting.id}/${row.id}?setting=1`}>设置</a>
+        )
       }
     }
   ]

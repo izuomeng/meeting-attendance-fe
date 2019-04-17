@@ -1,18 +1,10 @@
 import * as React from 'react'
 import { Card } from 'antd'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { useFetch } from '../../libs/hooks'
 import Loading from '../../components/Loading'
-import { PieChart } from './Chart';
-
-interface IResp {
-  id: number
-  title: string
-  confirm: number
-  decline: number
-  unknown: number
-  total: number
-}
+import { PieChart } from './Chart'
+import { IResp } from './I'
 
 const Container = styled.div`
   display: flex;
@@ -38,11 +30,13 @@ const Statistics: React.FunctionComponent = () => {
   }
   return (
     <Container>
-      {data.map(item => (
-        <Card hoverable={true} key={item.id} title={item.title}>
-          <PieChart data={[]} />
-        </Card>
-      ))}
+      {data
+        .filter(item => item.total > 0)
+        .map(item => (
+          <Card hoverable={true} key={item.id} title={item.title}>
+            <PieChart data={item} />
+          </Card>
+        ))}
     </Container>
   )
 }

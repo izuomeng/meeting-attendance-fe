@@ -16,6 +16,10 @@ export function formatDate(date: string): string {
   return customFormat(date, 'YYYY-MM-DD')
 }
 
-export function getQuery() {
+export function getQuery(): any {
   return qs.parse(location.search.slice(1))
+}
+
+export function toFixed(num: number, digit = 1): number {
+  return parseFloat(num.toFixed(digit))
 }

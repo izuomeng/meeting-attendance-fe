@@ -5,6 +5,7 @@ import XTable, { IColumn } from '../../components/XTable'
 import { IUSerEntity, IMeetingEntity } from '../../libs/interfaces'
 import { formatTime, formatDate } from '../../libs'
 import Filter, { IFormValues } from '../../components/Filter'
+import { Compare } from '../../components'
 import RoomTable from './RoomTable'
 
 const StyledFilter = styled(Filter)`
@@ -52,8 +53,22 @@ const signColumns: IColumn[] = [
   { dataIndex: 'userName', title: '姓名' },
   { dataIndex: 'signTime', title: '到场时间' },
   { dataIndex: 'signDesc', title: '到场结果' },
-  { dataIndex: 'cameraName', title: '摄像头' },
-  { dataIndex: 'image', title: '识别结果(人脸库vs抓拍图)' }
+  {
+    dataIndex: 'cameraName',
+    title: '摄像头',
+    render() {
+      return '第二号'
+    }
+  },
+  {
+    dataIndex: 'image',
+    title: '识别结果(人脸库vs抓拍图)',
+    render(_: any, row: any) {
+      return (
+        <Compare url1={row.face} url2={row.image} />
+      )
+    }
+  }
 ]
 
 const FinishedMeeting: React.FunctionComponent = () => {

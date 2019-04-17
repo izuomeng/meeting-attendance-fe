@@ -1,31 +1,28 @@
 // tslint:disable:object-literal-sort-keys
 import * as React from 'react'
 import * as G2 from '@antv/g2'
+import { IResp } from './I'
+import { toFixed } from '../../libs';
 
-export const PieChart: React.FC<{ data: object }> = () => {
+export const PieChart: React.FC<{ data: IResp }> = ({ data: info }) => {
   const div = React.createRef<HTMLDivElement>()
 
   React.useEffect(() => {
     const data = [
       {
         item: '拒绝',
-        count: 40,
-        percent: 0.4
+        count: info.decline,
+        percent: toFixed(info.decline / info.total * 100)
       },
       {
         item: '参加',
-        count: 21,
-        percent: 0.21
-      },
-      {
-        item: '迟到',
-        count: 22,
-        percent: 0.22
+        count: info.confirm,
+        percent: toFixed(info.confirm / info.total * 100)
       },
       {
         item: '未知',
-        count: 17,
-        percent: 0.17
+        count: info.unknown,
+        percent: toFixed(info.unknown / info.total * 100)
       }
     ]
     const chart = new G2.Chart({
@@ -35,7 +32,7 @@ export const PieChart: React.FC<{ data: object }> = () => {
     })
     chart.source(data, {
       percent: {
-        formatter: (val: number) => val * 100 + '%'
+        formatter: (val: number) => val + '%'
       }
     })
     chart.coord('theta', {
@@ -62,7 +59,7 @@ export const PieChart: React.FC<{ data: object }> = () => {
         stroke: '#fff'
       })
     chart.render()
-  })
+  }, [])
 
   return <div ref={div} />
 }

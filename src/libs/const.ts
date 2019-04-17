@@ -1,0 +1,1 @@
+export const DEFAULT_IMAGE = 'http://p3.pstatp.com/origin/1e0730001764139a48f85'

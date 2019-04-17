@@ -1,6 +1,6 @@
 import * as React from 'react'
-import * as moment from 'moment'
 import XTable from '../../components/XTable'
+import { formatTime } from '../../libs';
 
 interface IProps {
   id: number
@@ -22,7 +22,7 @@ const RoomTable: React.FunctionComponent<IProps> = ({
       dataIndex: 'signTime',
       title: '签到时间',
       render(cell: string) {
-        return moment(cell).format('hh:mm')
+        return formatTime(cell)
       }
     },
     { dataIndex: 'signNum', title: '参与人数' },

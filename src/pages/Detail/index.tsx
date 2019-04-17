@@ -9,8 +9,8 @@ import Setting, { IRoomConfig } from '../../components/Setting'
 import { useFetch } from '../../libs/hooks'
 import { IMeetingEntity, IRoomEntity } from '../../libs/interfaces'
 import { formatTime, getQuery } from '../../libs'
-
-const DEFAULT_IMAGE = 'http://p3.pstatp.com/origin/1e0730001764139a48f85'
+import { DEFAULT_IMAGE } from '../../libs/const'
+import { Compare } from '../../components'
 
 const Container = styled.div`
   & .ant-carousel {
@@ -37,27 +37,6 @@ const Info = styled.div`
   }
 `
 
-const Compare = styled.div<{ faceHubUrl: string; takenUrl: string }>`
-  display: flex;
-  width: 160px;
-  justify-content: space-between;
-  & > div {
-    width: 48%;
-    height: 70px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
-  & > div:first-child {
-    background-image: ${props =>
-      props.faceHubUrl ? `url(${props.faceHubUrl})` : ''};
-  }
-  & > div:last-child {
-    background-image: ${props =>
-      props.takenUrl ? `url(${props.takenUrl})` : ''};
-  }
-`
-
 const columns = [
   { dataIndex: 'userName', title: '姓名' },
   { dataIndex: 'signTime', title: '到场时间', render: formatTime },
@@ -74,10 +53,7 @@ const columns = [
     title: '识别结果(人脸库vs抓拍图)',
     render(_: any, row: any) {
       return (
-        <Compare faceHubUrl={row.face} takenUrl={row.image || DEFAULT_IMAGE}>
-          <div />
-          <div />
-        </Compare>
+        <Compare url1={row.face} url2={row.image || DEFAULT_IMAGE} />
       )
     }
   }
