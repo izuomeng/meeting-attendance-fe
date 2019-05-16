@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { WithFetchSimple } from '../../components/WithFetch'
 import { IListResponse } from '../../libs/interfaces'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { ISignItem } from './I';
+import { ISignItem } from './I'
 
-import ShootImg from '../../images/shoot.png';
+import ShootImg from '../../images/shoot.jpg'
 
 const Cover = styled.div`
   background-repeat: no-repeat;

@@ -77,8 +77,8 @@ const SignInfo: React.SFC<{ id: string }> = ({ id }) => {
         return (
           <a
             onClick={async () => {
-              await request(`/api/meeting/${id}/sign`, {
-                data: { uid: record.userId },
+              await request(`/api/meeting/sign`, {
+                data: { id: record.id },
                 method: 'delete'
               })
               self.table.fetchData()

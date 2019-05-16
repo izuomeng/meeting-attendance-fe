@@ -44,6 +44,7 @@ const CameraManage: React.FunctionComponent<IProps> = props => {
       render(cell: number, record: ICamera) {
         return (
           <Switch
+            disabled={true}
             checked={!!cell}
             onChange={value => handleSwitchInUse(+value, record)}
           />

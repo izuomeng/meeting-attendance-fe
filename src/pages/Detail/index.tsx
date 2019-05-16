@@ -37,24 +37,36 @@ const Info = styled.div`
   }
 `
 
+const colorMap = {
+  准时到场: 'green',
+  未到场: 'red'
+}
+
 const columns = [
   { dataIndex: 'userName', title: '姓名' },
   { dataIndex: 'signTime', title: '到场时间', render: formatTime },
-  { dataIndex: 'signDesc', title: '到场结果' },
+  {
+    dataIndex: 'signDesc',
+    title: '到场结果',
+    render(cell: string) {
+      return <span style={{ color: colorMap[cell] }}>{cell}</span>
+    }
+  },
   {
     dataIndex: 'cameraName',
     title: '摄像头',
-    render() {
-      return '摄像头1号'
+    render(cell: string, row: any) {
+      if (row.signDesc === '未到场') {
+        return null
+      }
+      return cell || '摄像头1号'
     }
   },
   {
     dataIndex: 'image',
     title: '识别结果(人脸库vs抓拍图)',
     render(_: any, row: any) {
-      return (
-        <Compare url1={row.face} url2={row.image || DEFAULT_IMAGE} />
-      )
+      return <Compare url1={row.face} url2={row.image || DEFAULT_IMAGE} />
     }
   }
 ]
@@ -89,18 +101,20 @@ const Detail: React.FunctionComponent<RouteComponentProps<IParams>> = ({
   // 告知服务端开始进行人脸比对
   const passport = JSON.stringify({ type: 1, mid: params.mid, rid: params.rid })
   const loop = () => {
+    console.log('Send passport')
     clearTimeout(tid)
     ws.send(passport)
     tid = setTimeout(loop, config.collectHz * 1000)
   }
 
   ws.onopen = () => {
-    console.log('Connection open ...')
+    console.log('Connection open.')
     loop()
   }
 
   ws.onmessage = evt => {
     const message = JSON.parse(evt.data)
+    console.log('onmessage: ', message)
     // 1表示重新请求数据
     if (message.type === 1 && refs.table) {
       refs.table.fetchData()

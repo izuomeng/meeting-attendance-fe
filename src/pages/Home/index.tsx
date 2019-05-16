@@ -33,14 +33,12 @@ const Container = styled.div`
 `
 const MeetingRoomContainer = styled.div`
   padding: 24px 0;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 24px;
 
   ${MeetingPlace} {
-    justify-content: space-between;
-    width: 32%;
-    margin-bottom: 12px;
+    width: 100%;
   }
 `
 
@@ -57,11 +55,10 @@ class OngoingMeeting extends React.Component<object, IState> {
   }
 
   async fetchMeetingList() {
-    const {
-      data: { list }
-    } = await request<IListResponse<IMeetingEntity>>(
+    const { data } = await request<IListResponse<IMeetingEntity>>(
       '/api/meetings?type=ongoing'
     )
+    const list = data.list.filter(item => Number(item.id) === 3123123)
     this.setState({ meetingList: list, currentMeeting: list[0] })
   }
 
@@ -105,11 +102,13 @@ class OngoingMeeting extends React.Component<object, IState> {
               onChange={this.handleChange}
               style={{ width: 200 }}
             >
-              {meetingList.map(item => (
-                <Select.Option key={item.id} value={item.id}>
-                  {item.title}
-                </Select.Option>
-              ))}
+              {meetingList
+                .filter(item => Number(item.id) === 3123123)
+                .map(item => (
+                  <Select.Option key={item.id} value={item.id}>
+                    {item.title}
+                  </Select.Option>
+                ))}
             </Select>
             <StyledButton onClick={this.toggleModal('infoModalShow', true)}>
               会议信息

@@ -17,7 +17,7 @@ export interface IMeetingInfo {
   endTime: string
   type: number
   state: number
-  createBy: string
+  createBy: { name: string }
   createTime: string
   rooms: IRoomEntity[]
   users: IRoomUSer[]
@@ -81,8 +81,8 @@ const MeetingInfo: React.FC<{
       }, {})
       return (
         <div className={props.className}>
-          <Item label="创建人">{data.createBy}</Item>
-          <Item label="审核人">{data.id}</Item>
+          <Item label="创建人">{data.createBy.name}</Item>
+          {/* <Item label="审核人">{data.id}</Item> */}
           <Item label="创建时间">{formatDate(data.createTime)}</Item>
           <Item label="会议日期">{formatDate(data.startTime)}</Item>
           <Item label="会议时间">
